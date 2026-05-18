@@ -1,0 +1,216 @@
+/* ============================================================
+   EcoRide — Feuille de style globale
+   Palette : vert forêt #2d6a4f | vert clair #74c69d | accent #f4a261
+   ============================================================ */
+
+:root {
+    --eco-dark:   #1b4332;
+    --eco-main:   #2d6a4f;
+    --eco-mid:    #40916c;
+    --eco-light:  #74c69d;
+    --eco-pale:   #d8f3dc;
+    --accent:     #f4a261;
+    --text-dark:  #1a1a2e;
+    --radius:     0.75rem;
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4faf7;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main { flex: 1; }
+
+/* ── Couleurs EcoRide ──────────────────────────────────────── */
+.bg-eco       { background-color: var(--eco-main) !important; }
+.bg-eco-dark  { background-color: var(--eco-dark) !important; }
+.bg-eco-light { background-color: var(--eco-pale) !important; }
+.text-eco     { color: var(--eco-main) !important; }
+.text-eco-light { color: var(--eco-light) !important; }
+
+/* ── Boutons ──────────────────────────────────────────────── */
+.btn-eco {
+    background-color: var(--eco-main);
+    color: #fff;
+    border-radius: var(--radius);
+    border: 2px solid var(--eco-main);
+    transition: all .2s;
+}
+.btn-eco:hover {
+    background-color: var(--eco-dark);
+    border-color: var(--eco-dark);
+    color: #fff;
+}
+
+.btn-eco-outline {
+    background-color: transparent;
+    color: #fff;
+    border-radius: var(--radius);
+    border: 2px solid #fff;
+    padding: .375rem .9rem;
+    font-size: .9rem;
+    transition: all .2s;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-eco-outline:hover {
+    background-color: #fff;
+    color: var(--eco-main);
+}
+
+.btn-accent {
+    background-color: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+}
+.btn-accent:hover { background-color: #e08c4e; color: #fff; }
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero {
+    background: linear-gradient(135deg, var(--eco-dark) 0%, var(--eco-mid) 60%, var(--eco-light) 100%);
+    color: #fff;
+    padding: 5rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+}
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0; right: 0;
+    height: 60px;
+    background: #f4faf7;
+    clip-path: ellipse(55% 100% at 50% 100%);
+}
+.hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; }
+
+/* ── Barre de recherche hero ──────────────────────────────── */
+.search-card {
+    background: rgba(255,255,255,.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: var(--radius);
+    padding: 1.5rem 2rem;
+}
+.search-card .form-control,
+.search-card .form-select {
+    border-radius: var(--radius);
+    border: none;
+    background: rgba(255,255,255,.9);
+}
+.search-card .form-control:focus,
+.search-card .form-select:focus { box-shadow: 0 0 0 .25rem rgba(116,198,157,.4); }
+
+/* ── Cards covoiturage ───────────────────────────────────── */
+.card-cov {
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    transition: transform .2s, box-shadow .2s;
+}
+.card-cov:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(45,106,79,.15);
+}
+.card-cov .card-header {
+    background: var(--eco-pale);
+    border-radius: var(--radius) var(--radius) 0 0;
+    border: none;
+}
+
+/* ── Sidebar filtres ─────────────────────────────────────── */
+.sidebar-filters {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    padding: 1.25rem;
+}
+.sidebar-filters h6 {
+    color: var(--eco-main);
+    font-weight: 600;
+    border-bottom: 2px solid var(--eco-pale);
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+}
+
+/* ── Section présentation accueil ───────────────────────── */
+.feature-icon {
+    width: 64px; height: 64px;
+    background: var(--eco-pale);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.75rem;
+    color: var(--eco-main);
+    margin: 0 auto 1rem;
+}
+
+/* ── Avatar ──────────────────────────────────────────────── */
+.avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--eco-pale);
+}
+.avatar-lg {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--eco-light);
+}
+
+/* ── Note étoiles ────────────────────────────────────────── */
+.stars .bi-star-fill, .stars .bi-star { font-size: .9rem; }
+
+/* ── Badges ──────────────────────────────────────────────── */
+.badge-eco {
+    background-color: var(--eco-light);
+    color: var(--eco-dark);
+    border-radius: 2rem;
+    padding: .3em .8em;
+    font-size: .8rem;
+    font-weight: 500;
+}
+
+/* ── Dashboard ────────────────────────────────────────────── */
+.dash-card {
+    border-radius: var(--radius);
+    border: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    transition: box-shadow .2s;
+}
+.dash-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+
+.stat-badge {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--eco-main);
+}
+
+/* ── Formulaires ─────────────────────────────────────────── */
+.form-control:focus, .form-select:focus {
+    border-color: var(--eco-mid);
+    box-shadow: 0 0 0 .25rem rgba(64,145,108,.25);
+}
+.form-label { font-weight: 500; }
+
+/* ── Tables ──────────────────────────────────────────────── */
+.table-eco thead { background-color: var(--eco-pale); color: var(--eco-dark); }
+
+/* ── Navbar active ───────────────────────────────────────── */
+.navbar-dark .navbar-nav .nav-link.active {
+    color: var(--eco-light) !important;
+    font-weight: 600;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 767px) {
+    .hero { padding: 3rem 0 2.5rem; }
+    .search-card { padding: 1rem; }
+    .hero::after { display: none; }
+}
