@@ -10,8 +10,8 @@ function getMongo(): ?object {
         return null;
     }
 
-    $uri    = $_ENV['MONGO_URI'] ?? 'mongodb://localhost:27017';
-    $dbName = $_ENV['MONGO_DB']  ?? 'ecoride';
+    $uri    = env('MONGO_URI', 'mongodb://localhost:27017');
+    $dbName = env('MONGO_DB', 'ecoride');
 
     try {
         $client = new MongoDB\Client($uri);

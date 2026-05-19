@@ -1,0 +1,21 @@
+{
+    "name": "ecoride/ecoride",
+    "description": "Plateforme de covoiturage écologique — ECF DWWM",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "EcoRide\\": "src/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": []
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}

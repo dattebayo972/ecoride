@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoRide — Liste covoiturages (Desktop Mockup)</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --eco-dark:  #1b4332;
+    --eco-main:  #2d6a4f;
+    --eco-mid:   #40916c;
+    --eco-light: #74c69d;
+    --accent:    #f4a261;
+  }
+  body { font-family: 'Poppins', sans-serif; background: #f8faf9; padding-top: 24px; }
+  .annotation { position: fixed; top: 0; left: 0; right: 0; background: #1e293b; color: #94a3b8; text-align: center; font-size: .75rem; padding: .3rem; z-index: 9999; font-family: monospace; }
+  .navbar { background: var(--eco-dark); padding: .8rem 2rem; }
+  .navbar-brand { color: #fff !important; font-weight: 700; font-size: 1.4rem; }
+  .navbar-brand span { color: var(--eco-light); }
+  .nav-link { color: rgba(255,255,255,.85) !important; font-weight: 500; }
+  .nav-link:hover, .nav-link.active { color: var(--eco-light) !important; }
+  .btn-accent { background: var(--accent); color: #fff; border: none; font-weight: 600; border-radius: 8px; padding: .4rem 1.1rem; }
+
+  /* SEARCH BAR */
+  .search-bar { background: var(--eco-dark); padding: 1.5rem 0; }
+  .search-bar .form-control, .search-bar .form-select {
+    border-radius: 8px; border: none;
+    padding: .6rem 1rem; font-size: .9rem;
+  }
+  .btn-search { background: var(--accent); color: #fff; border: none; border-radius: 8px; font-weight: 600; padding: .6rem 1.5rem; white-space: nowrap; }
+
+  /* LAYOUT */
+  .main-content { padding: 2rem 0; }
+
+  /* SIDEBAR */
+  .sidebar-filters {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.5rem;
+    border: 2px solid #e0ece7;
+    position: sticky;
+    top: 90px;
+  }
+  .sidebar-filters h6 { color: var(--eco-dark); font-weight: 700; font-size: .85rem; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 1rem; }
+  .filter-section { border-bottom: 1px solid #f0f7f3; padding-bottom: 1rem; margin-bottom: 1rem; }
+  .filter-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .form-range { accent-color: var(--eco-mid); }
+  .form-check-input:checked { background-color: var(--eco-main); border-color: var(--eco-main); }
+  .btn-reset { color: var(--eco-mid); background: none; border: none; font-size: .85rem; padding: 0; text-decoration: underline; }
+
+  /* RESULTS */
+  .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+  .results-count { font-size: .9rem; color: #64748b; }
+  .results-count strong { color: var(--eco-dark); }
+
+  .card-cov {
+    border: 2px solid #e0ece7;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all .3s;
+    background: #fff;
+    margin-bottom: 1rem;
+  }
+  .card-cov:hover { border-color: var(--eco-mid); box-shadow: 0 4px 20px rgba(45,106,79,.12); transform: translateY(-2px); }
+
+  .card-cov .route { font-weight: 700; color: var(--eco-dark); font-size: 1.05rem; }
+  .card-cov .time-badge { background: #f0f7f3; color: var(--eco-dark); border-radius: 8px; padding: .3rem .7rem; font-size: .85rem; font-weight: 600; }
+  .price-tag { background: var(--accent); color: #fff; border-radius: 10px; padding: .4rem .9rem; font-weight: 700; font-size: 1rem; }
+  .badge-eco { background: #d8f3dc; color: var(--eco-dark); font-weight: 600; border-radius: 20px; padding: .2rem .7rem; font-size: .78rem; }
+  .driver-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--eco-light); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--eco-dark); font-size: 1rem; }
+  .btn-detail { background: var(--eco-main); color: #fff; border: none; border-radius: 8px; font-weight: 600; padding: .45rem 1.2rem; font-size: .9rem; }
+  .btn-detail:hover { background: var(--eco-dark); color: #fff; }
+
+  /* PAGINATION */
+  .page-link { color: var(--eco-main); border-radius: 8px !important; margin: 0 2px; }
+  .page-item.active .page-link { background: var(--eco-main); border-color: var(--eco-main); }
+
+  /* SORT */
+  .sort-select { border: 2px solid #e0ece7; border-radius: 8px; font-size: .85rem; color: var(--eco-dark); padding: .3rem .7rem; }
+</style>
+</head>
+<body>
+
+<div class="annotation">🖥️ MAQUETTE DESKTOP — Liste covoiturages EcoRide · 1280px · ECF DWWM 2026</div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#">🌿 Eco<span>Ride</span></a>
+    <div class="navbar-nav ms-auto d-flex flex-row align-items-center gap-3">
+      <a class="nav-link active" href="#">Covoiturages</a>
+      <a class="nav-link" href="#">Contact</a>
+      <a class="nav-link" href="#">Connexion</a>
+      <a class="btn btn-accent" href="#">S'inscrire</a>
+    </div>
+  </div>
+</nav>
+
+<!-- SEARCH BAR -->
+<div class="search-bar">
+  <div class="container">
+    <form class="row g-2 align-items-end">
+      <div class="col-md-3">
+        <label class="form-label text-white-50 small mb-1">Départ</label>
+        <input type="text" class="form-control" value="Paris" placeholder="Ville de départ">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label text-white-50 small mb-1">Arrivée</label>
+        <input type="text" class="form-control" value="Lyon" placeholder="Ville d'arrivée">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label text-white-50 small mb-1">Date</label>
+        <input type="date" class="form-control" value="2026-05-20">
+      </div>
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-search w-100"><i class="bi bi-search me-2"></i>Rechercher</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-content">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- SIDEBAR FILTRES -->
+      <div class="col-lg-3">
+        <div class="sidebar-filters">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0"><i class="bi bi-funnel-fill me-2" style="color:var(--eco-mid)"></i>Filtres</h6>
+            <button class="btn-reset">Réinitialiser</button>
+          </div>
+
+          <div class="filter-section">
+            <label class="form-label fw-semibold small" style="color:var(--eco-dark)">Type de véhicule</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="eco" checked>
+              <label class="form-check-label small" for="eco">
+                <i class="bi bi-lightning-charge-fill text-success me-1"></i>Écologique uniquement
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-section">
+            <label class="form-label fw-semibold small" style="color:var(--eco-dark)">Prix maximum</label>
+            <div class="d-flex justify-content-between small text-muted mb-1">
+              <span>0 crédit</span>
+              <span id="prix-val" class="fw-bold" style="color:var(--eco-main)">20 crédits</span>
+            </div>
+            <input type="range" class="form-range" min="0" max="50" value="20">
+          </div>
+
+          <div class="filter-section">
+            <label class="form-label fw-semibold small" style="color:var(--eco-dark)">Durée maximale</label>
+            <div class="d-flex justify-content-between small text-muted mb-1">
+              <span>0 h</span>
+              <span class="fw-bold" style="color:var(--eco-main)">4h 00</span>
+            </div>
+            <input type="range" class="form-range" min="0" max="12" step="0.5" value="4">
+          </div>
+
+          <div class="filter-section">
+            <label class="form-label fw-semibold small" style="color:var(--eco-dark)">Note conducteur min.</label>
+            <div class="d-flex gap-1 mt-1">
+              <span style="color:var(--accent)">★★★★☆</span>
+              <span class="small text-muted ms-1">(≥ 4)</span>
+            </div>
+            <input type="range" class="form-range mt-1" min="1" max="5" step="0.5" value="4">
+          </div>
+
+          <button class="btn w-100 fw-semibold mt-2" style="background:var(--eco-main);color:#fff;border-radius:8px">
+            <i class="bi bi-funnel me-2"></i>Appliquer les filtres
+          </button>
+        </div>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="col-lg-9">
+        <div class="results-header">
+          <div class="results-count"><strong>8 covoiturages</strong> trouvés pour Paris → Lyon · 20/05/2026</div>
+          <select class="sort-select">
+            <option>Trier par : Départ (croissant)</option>
+            <option>Prix (croissant)</option>
+            <option>Durée (croissante)</option>
+            <option>Note conducteur</option>
+          </select>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="card-cov">
+          <div class="card-body p-3">
+            <div class="row align-items-center g-3">
+              <div class="col-md-5">
+                <div class="route mb-1"><i class="bi bi-geo-alt text-muted me-1"></i>Paris <i class="bi bi-arrow-right mx-2" style="color:var(--eco-mid)"></i> Lyon</div>
+                <div class="d-flex gap-2 align-items-center">
+                  <span class="time-badge"><i class="bi bi-clock me-1"></i>08:00 → 11:30</span>
+                  <span class="text-muted small">3h 30</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="driver-avatar">M</div>
+                  <div>
+                    <div class="fw-semibold small">Marie D.</div>
+                    <div class="small text-warning">★★★★☆ <span class="text-muted">4.0</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 text-center">
+                <div class="d-flex flex-column gap-1">
+                  <span class="badge-eco"><i class="bi bi-lightning-charge-fill me-1"></i>Éco</span>
+                  <span class="badge bg-light text-muted border small"><i class="bi bi-people me-1"></i>2 places</span>
+                </div>
+              </div>
+              <div class="col-md-2 text-end">
+                <div class="price-tag mb-2">8 crédits</div>
+                <button class="btn-detail btn btn-sm"><i class="bi bi-eye me-1"></i>Voir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="card-cov">
+          <div class="card-body p-3">
+            <div class="row align-items-center g-3">
+              <div class="col-md-5">
+                <div class="route mb-1"><i class="bi bi-geo-alt text-muted me-1"></i>Paris <i class="bi bi-arrow-right mx-2" style="color:var(--eco-mid)"></i> Lyon</div>
+                <div class="d-flex gap-2 align-items-center">
+                  <span class="time-badge"><i class="bi bi-clock me-1"></i>10:00 → 14:00</span>
+                  <span class="text-muted small">4h 00</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="driver-avatar" style="background:var(--eco-mid);color:#fff">T</div>
+                  <div>
+                    <div class="fw-semibold small">Thomas R.</div>
+                    <div class="small text-warning">★★★★★ <span class="text-muted">5.0</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 text-center">
+                <div class="d-flex flex-column gap-1">
+                  <span class="badge bg-secondary text-white small">Non éco</span>
+                  <span class="badge bg-light text-muted border small"><i class="bi bi-people me-1"></i>3 places</span>
+                </div>
+              </div>
+              <div class="col-md-2 text-end">
+                <div class="price-tag mb-2">6 crédits</div>
+                <button class="btn-detail btn btn-sm"><i class="bi bi-eye me-1"></i>Voir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="card-cov" style="border-color:var(--eco-mid); background:#f0fff4;">
+          <div class="card-body p-3">
+            <div class="row align-items-center g-3">
+              <div class="col-md-5">
+                <div class="route mb-1"><i class="bi bi-geo-alt text-muted me-1"></i>Paris <i class="bi bi-arrow-right mx-2" style="color:var(--eco-mid)"></i> Lyon</div>
+                <div class="d-flex gap-2 align-items-center">
+                  <span class="time-badge"><i class="bi bi-clock me-1"></i>14:30 → 17:30</span>
+                  <span class="text-muted small">3h 00</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="driver-avatar" style="background:#d8f3dc;color:var(--eco-dark)">S</div>
+                  <div>
+                    <div class="fw-semibold small">Sophie L.</div>
+                    <div class="small text-warning">★★★★½ <span class="text-muted">4.5</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 text-center">
+                <div class="d-flex flex-column gap-1">
+                  <span class="badge-eco"><i class="bi bi-lightning-charge-fill me-1"></i>Éco</span>
+                  <span class="badge bg-light text-muted border small"><i class="bi bi-people me-1"></i>1 place</span>
+                </div>
+              </div>
+              <div class="col-md-2 text-end">
+                <div class="price-tag mb-2">10 crédits</div>
+                <button class="btn-detail btn btn-sm"><i class="bi bi-eye me-1"></i>Voir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="card-cov">
+          <div class="card-body p-3">
+            <div class="row align-items-center g-3">
+              <div class="col-md-5">
+                <div class="route mb-1"><i class="bi bi-geo-alt text-muted me-1"></i>Paris <i class="bi bi-arrow-right mx-2" style="color:var(--eco-mid)"></i> Lyon</div>
+                <div class="d-flex gap-2 align-items-center">
+                  <span class="time-badge"><i class="bi bi-clock me-1"></i>17:00 → 21:00</span>
+                  <span class="text-muted small">4h 00</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="driver-avatar" style="background:#fde68a;color:#92400e">A</div>
+                  <div>
+                    <div class="fw-semibold small">Alex M.</div>
+                    <div class="small text-warning">★★★☆☆ <span class="text-muted">3.5</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 text-center">
+                <div class="d-flex flex-column gap-1">
+                  <span class="badge-eco"><i class="bi bi-lightning-charge-fill me-1"></i>Éco</span>
+                  <span class="badge bg-light text-muted border small"><i class="bi bi-people me-1"></i>4 places</span>
+                </div>
+              </div>
+              <div class="col-md-2 text-end">
+                <div class="price-tag mb-2">9 crédits</div>
+                <button class="btn-detail btn btn-sm"><i class="bi bi-eye me-1"></i>Voir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGINATION -->
+        <nav class="mt-4 d-flex justify-content-center">
+          <ul class="pagination">
+            <li class="page-item disabled"><a class="page-link" href="#">‹ Préc.</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">Suiv. ›</a></li>
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="mt-5" style="background:var(--eco-dark);color:rgba(255,255,255,.7);padding:1.5rem 0;text-align:center;font-size:.85rem;">
+  <div class="container">
+    🌿 <strong>EcoRide</strong> &nbsp;·&nbsp; <a href="#" style="color:var(--eco-light);text-decoration:none">Mentions légales</a> &nbsp;·&nbsp; <a href="#" style="color:var(--eco-light);text-decoration:none">Contact</a>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

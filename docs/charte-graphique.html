@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoRide — Charte Graphique</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Poppins', sans-serif; background: #fff; color: #1e293b; }
+
+/* PRINT */
+@media print {
+  .no-print { display: none; }
+  body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .page-break { page-break-before: always; }
+  section { page-break-inside: avoid; }
+}
+
+/* LAYOUT */
+.page { max-width: 960px; margin: 0 auto; padding: 2rem; }
+
+/* COVER */
+.cover {
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 55%, #40916c 100%);
+  color: #fff;
+  padding: 80px 60px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: rgba(116,198,157,.15);
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(244,162,97,.1);
+}
+.cover .logo { font-size: 3rem; font-weight: 800; letter-spacing: -1px; }
+.cover .logo span { color: #74c69d; }
+.cover .tagline { font-size: 1.1rem; opacity: .8; margin-top: .5rem; }
+.cover h1 { font-size: 2rem; font-weight: 300; margin-top: 3rem; letter-spacing: 2px; text-transform: uppercase; opacity: .9; }
+.cover .meta { margin-top: 1.5rem; font-size: .85rem; opacity: .6; }
+
+/* SECTIONS */
+.section { margin: 3rem 0; }
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1b4332;
+  border-left: 5px solid #40916c;
+  padding-left: 1rem;
+  margin-bottom: 1.5rem;
+}
+.section-sub { font-size: .85rem; color: #64748b; margin-top: .2rem; font-weight: 400; }
+
+/* COLOR PALETTE */
+.palette-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+.swatch { border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.swatch-color { height: 120px; }
+.swatch-info { padding: .7rem .8rem; background: #fff; border: 1px solid #f0f0f0; border-top: none; border-radius: 0 0 14px 14px; }
+.swatch-name { font-weight: 700; font-size: .8rem; color: #1e293b; }
+.swatch-hex { font-size: .75rem; color: #64748b; font-family: monospace; margin-top: .1rem; }
+.swatch-usage { font-size: .7rem; color: #94a3b8; margin-top: .3rem; line-height: 1.4; }
+
+/* GRADIENT DEMO */
+.gradient-demo {
+  height: 80px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1b4332, #2d6a4f, #40916c);
+  margin-bottom: .5rem;
+}
+.gradient-label { font-size: .8rem; color: #64748b; }
+
+/* TYPOGRAPHY */
+.typo-section { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.typo-card { background: #f8faf9; border-radius: 12px; padding: 1.5rem; border: 1px solid #e0ece7; }
+.typo-card .sample { margin-bottom: .8rem; }
+.typo-card .label { font-size: .75rem; color: #94a3b8; font-family: monospace; }
+
+.type-h1 { font-size: 2rem; font-weight: 700; color: #1b4332; line-height: 1.2; }
+.type-h2 { font-size: 1.5rem; font-weight: 600; color: #2d6a4f; }
+.type-h3 { font-size: 1.15rem; font-weight: 600; color: #1e293b; }
+.type-body { font-size: 1rem; color: #334155; line-height: 1.6; }
+.type-small { font-size: .85rem; color: #64748b; }
+.type-label { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #94a3b8; }
+
+/* WEIGHTS */
+.weights-grid { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.weight-item { font-family: 'Poppins', sans-serif; font-size: 1.5rem; color: #1b4332; }
+
+/* COMPONENTS */
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.comp-card { background: #f8faf9; border-radius: 12px; padding: 1.5rem; border: 1px solid #e0ece7; }
+.comp-card h6 { font-size: .75rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; letter-spacing: .5px; margin-bottom: 1rem; }
+
+/* BUTTONS */
+.btn-demo { display: inline-block; border-radius: 8px; padding: .55rem 1.3rem; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: .9rem; cursor: pointer; border: none; margin: .3rem; }
+.btn-primary-d { background: #2d6a4f; color: #fff; }
+.btn-accent-d { background: #f4a261; color: #fff; }
+.btn-outline-d { background: transparent; color: #2d6a4f; border: 2px solid #2d6a4f; }
+.btn-ghost-d { background: transparent; color: #64748b; border: 2px solid #e0ece7; }
+
+/* BADGES */
+.badge-demo { display: inline-block; border-radius: 20px; padding: .25rem .8rem; font-size: .78rem; font-weight: 600; margin: .25rem; }
+.badge-eco-d { background: #d8f3dc; color: #1b4332; }
+.badge-price-d { background: #f4a261; color: #fff; }
+.badge-warning-d { background: #fef3c7; color: #92400e; }
+.badge-danger-d { background: #fee2e2; color: #991b1b; }
+.badge-neutral-d { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+/* CARDS DEMO */
+.card-demo { background: #fff; border: 2px solid #e0ece7; border-radius: 14px; overflow: hidden; margin-bottom: .8rem; }
+.card-demo-header { background: #1b4332; color: #fff; padding: .6rem 1rem; font-weight: 600; font-size: .85rem; display: flex; justify-content: space-between; }
+.card-demo-body { padding: .9rem 1rem; }
+.card-demo-body .route { font-weight: 700; color: #1b4332; font-size: .9rem; }
+.card-demo-body .details { font-size: .78rem; color: #64748b; margin-top: .3rem; }
+
+/* FORM DEMO */
+.input-demo { border: 2px solid #e0ece7; border-radius: 8px; padding: .5rem .9rem; font-family: 'Poppins', sans-serif; font-size: .85rem; width: 100%; margin-bottom: .5rem; }
+.input-focus { border-color: #40916c; box-shadow: 0 0 0 3px rgba(64,145,108,.15); outline: none; }
+
+/* ICONS */
+.icon-grid { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.icon-item { text-align: center; }
+.icon-item i { font-size: 1.8rem; color: #2d6a4f; display: block; margin-bottom: .3rem; }
+.icon-item span { font-size: .7rem; color: #94a3b8; }
+
+/* SPACING */
+.spacing-row { display: flex; gap: 1rem; align-items: flex-end; }
+.space-block { background: #d8f3dc; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: .7rem; color: #1b4332; font-weight: 600; }
+
+/* LOGO */
+.logo-variants { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.logo-var { border-radius: 12px; padding: 1.5rem; display: flex; align-items: center; justify-content: center; }
+.logo-text { font-size: 1.5rem; font-weight: 800; }
+
+/* PRINT BTN */
+.print-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #2d6a4f; color: #fff; border: none; border-radius: 50px; padding: .7rem 1.5rem; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; box-shadow: 0 4px 16px rgba(45,106,79,.3); z-index: 999; font-size: .9rem; }
+
+/* DIVIDER */
+.divider { height: 2px; background: linear-gradient(to right, #1b4332, #74c69d, transparent); margin: 2.5rem 0; border: none; }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <div class="logo">🌿 Eco<span>Ride</span></div>
+  <div class="tagline">Plateforme de covoiturage écologique</div>
+  <h1>Charte Graphique</h1>
+  <div class="meta">ECF DWWM 2026 &nbsp;·&nbsp; Version 1.0 &nbsp;·&nbsp; Mai 2026</div>
+</div>
+
+<!-- CONTENT -->
+<div class="page">
+
+  <!-- INTRO -->
+  <div class="section">
+    <div class="section-title">Introduction <span class="section-sub">— Identité visuelle</span></div>
+    <p style="color:#475569;line-height:1.8;max-width:680px">
+      EcoRide adopte une identité visuelle ancrée dans les valeurs de nature, d'écologie et de modernité.
+      La palette de verts profonds évoque la forêt et la durabilité, tandis que l'accent orange apporte de la
+      chaleur et de l'énergie. La typographie Poppins garantit une lisibilité optimale sur tous les supports
+      numériques.
+    </p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- PALETTE -->
+  <div class="section">
+    <div class="section-title">Palette de couleurs <span class="section-sub">— CSS Custom Properties</span></div>
+    <div class="palette-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1b4332"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Eco Dark</div>
+          <div class="swatch-hex">#1b4332</div>
+          <div class="swatch-hex">RGB(27, 67, 50)</div>
+          <div class="swatch-usage">Navbar, footer, titres principaux, textes foncés</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2d6a4f"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Eco Main</div>
+          <div class="swatch-hex">#2d6a4f</div>
+          <div class="swatch-hex">RGB(45, 106, 79)</div>
+          <div class="swatch-usage">Couleur principale, boutons, liens actifs</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#40916c"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Eco Mid</div>
+          <div class="swatch-hex">#40916c</div>
+          <div class="swatch-hex">RGB(64, 145, 108)</div>
+          <div class="swatch-usage">Icônes, bordures focus, hover states</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#74c69d"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Eco Light</div>
+          <div class="swatch-hex">#74c69d</div>
+          <div class="swatch-hex">RGB(116, 198, 157)</div>
+          <div class="swatch-usage">Accents clairs, avatars, badges écologiques</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#f4a261"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Accent</div>
+          <div class="swatch-hex">#f4a261</div>
+          <div class="swatch-hex">RGB(244, 162, 97)</div>
+          <div class="swatch-usage">CTA boutons, prix, étoiles, alertes positives</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem">
+      <div class="gradient-demo"></div>
+      <div class="gradient-label">Dégradé principal · <code>linear-gradient(135deg, #1b4332, #2d6a4f, #40916c)</code> — Hero, headers de page</div>
+    </div>
+
+    <div style="margin-top:1rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem">
+      <div>
+        <div style="height:50px;border-radius:8px;background:#f8faf9;border:2px solid #e0ece7;margin-bottom:.4rem"></div>
+        <div style="font-size:.75rem;color:#64748b">Fond page <code>#f8faf9</code></div>
+      </div>
+      <div>
+        <div style="height:50px;border-radius:8px;background:#e0ece7;margin-bottom:.4rem"></div>
+        <div style="font-size:.75rem;color:#64748b">Bordures <code>#e0ece7</code></div>
+      </div>
+      <div>
+        <div style="height:50px;border-radius:8px;background:#d8f3dc;margin-bottom:.4rem"></div>
+        <div style="font-size:.75rem;color:#64748b">Badge éco <code>#d8f3dc</code></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- TYPOGRAPHY -->
+  <div class="section">
+    <div class="section-title">Typographie <span class="section-sub">— Poppins (Google Fonts)</span></div>
+
+    <div style="margin-bottom:1.5rem;background:#f0fff4;border-radius:12px;padding:1.2rem 1.5rem;border:2px solid #d8f3dc">
+      <div style="font-size:.8rem;color:#2d6a4f;font-weight:600;margin-bottom:.5rem">POLICE PRINCIPALE</div>
+      <div style="font-size:2rem;font-weight:700;color:#1b4332">Poppins</div>
+      <div style="font-size:.85rem;color:#64748b;margin-top:.3rem">
+        Humanist sans-serif · Variable weight (300–800) · Inclut les italiques · Excellente lisibilité écran
+      </div>
+      <div style="font-size:.8rem;color:#64748b;margin-top:.5rem;font-family:monospace">
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.2rem">
+      <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:.5px;margin-bottom:.8rem">GRAISSES UTILISÉES</div>
+      <div class="weights-grid">
+        <div class="weight-item" style="font-weight:300">Light 300</div>
+        <div class="weight-item" style="font-weight:400">Regular 400</div>
+        <div class="weight-item" style="font-weight:600">SemiBold 600</div>
+        <div class="weight-item" style="font-weight:700">Bold 700</div>
+      </div>
+    </div>
+
+    <div class="typo-section">
+      <div class="typo-card">
+        <div class="sample"><div class="type-h1">Titre H1</div></div>
+        <div class="label">font-size: 2rem · weight: 700 · color: #1b4332</div>
+        <div class="label" style="margin-top:.2rem">Utilisé : Titres de sections hero</div>
+      </div>
+      <div class="typo-card">
+        <div class="sample"><div class="type-h2">Titre H2</div></div>
+        <div class="label">font-size: 1.5rem · weight: 600 · color: #2d6a4f</div>
+        <div class="label" style="margin-top:.2rem">Utilisé : Sous-sections, cartes</div>
+      </div>
+      <div class="typo-card">
+        <div class="sample"><div class="type-h3">Titre H3</div></div>
+        <div class="label">font-size: 1.15rem · weight: 600 · color: #1e293b</div>
+        <div class="label" style="margin-top:.2rem">Utilisé : En-têtes de cartes</div>
+      </div>
+      <div class="typo-card">
+        <div class="sample"><div class="type-body">Corps du texte — Voici un exemple de texte en corps principal, utilisé pour les descriptions et contenus.</div></div>
+        <div class="label">font-size: 1rem · weight: 400 · line-height: 1.6</div>
+      </div>
+      <div class="typo-card">
+        <div class="sample"><div class="type-small">Texte secondaire, métadonnées, dates, descriptions complémentaires</div></div>
+        <div class="label">font-size: 0.85rem · weight: 400 · color: #64748b</div>
+      </div>
+      <div class="typo-card">
+        <div class="sample"><div class="type-label">Label / Étiquette</div></div>
+        <div class="label">font-size: 0.75rem · weight: 600 · uppercase · letter-spacing: 0.5px</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- LOGO -->
+  <div class="section">
+    <div class="section-title">Logo & Identité</div>
+    <div class="logo-variants">
+      <div class="logo-var" style="background:linear-gradient(135deg,#1b4332,#2d6a4f)">
+        <div class="logo-text" style="color:#fff">🌿 Eco<span style="color:#74c69d">Ride</span></div>
+      </div>
+      <div class="logo-var" style="background:#fff;border:2px solid #e0ece7">
+        <div class="logo-text" style="color:#1b4332">🌿 Eco<span style="color:#40916c">Ride</span></div>
+      </div>
+      <div class="logo-var" style="background:#f8faf9;border:2px solid #e0ece7">
+        <div class="logo-text" style="color:#2d6a4f;font-size:1.2rem">🌿 EcoRide <span style="font-weight:300;font-size:.8rem;color:#64748b">Covoiturage</span></div>
+      </div>
+    </div>
+    <div style="margin-top:1rem;font-size:.82rem;color:#64748b;line-height:1.8">
+      <strong style="color:#1b4332">Construction du logo :</strong> Emoji feuille 🌿 + mot "Eco" en bold blanc/vert foncé + "Ride" en couleur claire (--eco-light sur fond sombre, --eco-mid sur fond blanc).<br>
+      <strong style="color:#1b4332">Espace minimum :</strong> 16px autour du logo. Ne pas modifier les couleurs ni la graisse des deux parties du mot.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- COMPOSANTS -->
+  <div class="section">
+    <div class="section-title">Composants UI</div>
+    <div class="comp-grid">
+
+      <div class="comp-card">
+        <h6>Boutons</h6>
+        <div>
+          <button class="btn-demo btn-primary-d">Rechercher</button>
+          <button class="btn-demo btn-accent-d">S'inscrire</button>
+          <button class="btn-demo btn-outline-d">Annuler</button>
+          <button class="btn-demo btn-ghost-d">Secondaire</button>
+        </div>
+        <div style="font-size:.72rem;color:#94a3b8;margin-top:.8rem">
+          border-radius: 8px · font-weight: 600 · padding: .55rem 1.3rem<br>
+          Primaire: bg #2d6a4f · Accent: bg #f4a261
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <h6>Badges & étiquettes</h6>
+        <div>
+          <span class="badge-demo badge-eco-d">⚡ Écologique</span>
+          <span class="badge-demo badge-price-d">12 crédits</span>
+          <span class="badge-demo badge-warning-d">En attente</span>
+          <span class="badge-demo badge-danger-d">Annulé</span>
+          <span class="badge-demo badge-neutral-d">Non éco</span>
+        </div>
+        <div style="font-size:.72rem;color:#94a3b8;margin-top:.8rem">
+          border-radius: 20px (pill) · font-size: .78rem · font-weight: 600
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <h6>Carte covoiturage</h6>
+        <div class="card-demo">
+          <div class="card-demo-header">
+            <span>Paris → Lyon</span>
+            <span style="background:#f4a261;border-radius:6px;padding:.1rem .5rem">8 crédits</span>
+          </div>
+          <div class="card-demo-body">
+            <div class="route">Marie D. · ⭐ 4.0</div>
+            <div class="details">20/05 · 08:00 → 11:30 · 3h 30</div>
+            <div style="margin-top:.5rem"><span class="badge-demo badge-eco-d" style="font-size:.7rem;padding:.15rem .6rem">⚡ Éco</span></div>
+          </div>
+        </div>
+        <div style="font-size:.72rem;color:#94a3b8">border-radius: 14px · border: 2px solid #e0ece7</div>
+      </div>
+
+      <div class="comp-card">
+        <h6>Champs de formulaire</h6>
+        <input class="input-demo" type="text" placeholder="Ville de départ">
+        <input class="input-demo input-focus" type="text" value="Paris" placeholder="Ville d'arrivée">
+        <div style="font-size:.72rem;color:#94a3b8;margin-top:.4rem">
+          Border: 2px solid #e0ece7 · Focus: #40916c + shadow rgba(64,145,108,.15)<br>
+          border-radius: 8px · padding: .6rem 1rem
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ICONS -->
+  <div class="section">
+    <div class="section-title">Iconographie <span class="section-sub">— Bootstrap Icons 1.11</span></div>
+    <div class="icon-grid">
+      <div class="icon-item"><i class="bi bi-leaf-fill"></i><span>écologique</span></div>
+      <div class="icon-item"><i class="bi bi-car-front-fill"></i><span>véhicule</span></div>
+      <div class="icon-item"><i class="bi bi-search"></i><span>recherche</span></div>
+      <div class="icon-item"><i class="bi bi-geo-alt-fill"></i><span>localisation</span></div>
+      <div class="icon-item"><i class="bi bi-clock-fill"></i><span>horaire</span></div>
+      <div class="icon-item"><i class="bi bi-coin"></i><span>crédits</span></div>
+      <div class="icon-item"><i class="bi bi-star-fill"></i><span>note</span></div>
+      <div class="icon-item"><i class="bi bi-shield-check-fill"></i><span>sécurité</span></div>
+      <div class="icon-item"><i class="bi bi-people-fill"></i><span>passagers</span></div>
+      <div class="icon-item"><i class="bi bi-chat-heart-fill"></i><span>avis</span></div>
+      <div class="icon-item"><i class="bi bi-lightning-charge-fill"></i><span>électrique</span></div>
+      <div class="icon-item"><i class="bi bi-person-fill"></i><span>profil</span></div>
+    </div>
+    <div style="margin-top:1rem;font-size:.8rem;color:#64748b">
+      Source : <strong>Bootstrap Icons CDN</strong> · Taille standard : 1rem–1.5rem · Couleur par défaut : var(--eco-main)
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SPACING -->
+  <div class="section">
+    <div class="section-title">Espacements & Rayons</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem">
+      <div>
+        <div style="font-size:.8rem;font-weight:700;color:#64748b;margin-bottom:.8rem">ESPACEMENTS (rem)</div>
+        <div class="spacing-row">
+          <div class="space-block" style="width:16px;height:16px">4</div>
+          <div class="space-block" style="width:24px;height:24px">6</div>
+          <div class="space-block" style="width:32px;height:32px">8</div>
+          <div class="space-block" style="width:48px;height:48px">12</div>
+          <div class="space-block" style="width:64px;height:64px">16</div>
+          <div class="space-block" style="width:80px;height:80px">20</div>
+        </div>
+        <div style="font-size:.72rem;color:#94a3b8;margin-top:.5rem">Base 4px — Multiples de 4 (Bootstrap grid)</div>
+      </div>
+      <div>
+        <div style="font-size:.8rem;font-weight:700;color:#64748b;margin-bottom:.8rem">RAYONS DE BORDURE</div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap">
+          <div style="text-align:center">
+            <div style="width:50px;height:50px;background:#d8f3dc;border-radius:4px;margin:0 auto .3rem"></div>
+            <div style="font-size:.7rem;color:#64748b">4px<br>chips</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:50px;height:50px;background:#d8f3dc;border-radius:8px;margin:0 auto .3rem"></div>
+            <div style="font-size:.7rem;color:#64748b">8px<br>boutons</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:50px;height:50px;background:#d8f3dc;border-radius:12px;margin:0 auto .3rem"></div>
+            <div style="font-size:.7rem;color:#64748b">12px<br>items</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:50px;height:50px;background:#d8f3dc;border-radius:14px;margin:0 auto .3rem"></div>
+            <div style="font-size:.7rem;color:#64748b">14px<br>cartes</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:50px;height:50px;background:#d8f3dc;border-radius:25px;margin:0 auto .3rem"></div>
+            <div style="font-size:.7rem;color:#64748b">pill<br>badges</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FOOTER -->
+  <div style="text-align:center;padding:2rem 0;font-size:.82rem;color:#94a3b8">
+    EcoRide · Charte Graphique v1.0 · ECF DWWM 2026<br>
+    Tous droits réservés · Pour imprimer en PDF : Ctrl+P → Enregistrer en PDF
+  </div>
+
+</div>
+
+<!-- PRINT BUTTON -->
+<button class="print-btn no-print" onclick="window.print()">🖨️ Exporter en PDF</button>
+
+</body>
+</html>
