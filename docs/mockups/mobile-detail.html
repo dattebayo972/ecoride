@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>EcoRide — Détail covoiturage Mobile</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --eco-dark:  #1b4332;
+    --eco-main:  #2d6a4f;
+    --eco-mid:   #40916c;
+    --eco-light: #74c69d;
+    --accent:    #f4a261;
+  }
+  body { background: #e2e8f0; font-family: 'Poppins', sans-serif; display: flex; flex-direction: column; align-items: center; padding-top: 30px; padding-bottom: 40px; }
+  .annotation { position: fixed; top: 0; left: 0; right: 0; background: #1e293b; color: #94a3b8; text-align: center; font-size: .75rem; padding: .3rem; z-index: 9999; font-family: monospace; }
+  .phone-frame { width: 390px; max-width: 100%; background: #f8faf9; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,.25), 0 0 0 10px #1e293b; overflow: hidden; margin-top: 10px; }
+  .phone-notch { background: #1e293b; height: 30px; display: flex; align-items: center; justify-content: center; }
+  .phone-notch-bar { width: 100px; height: 16px; background: #0f172a; border-radius: 20px; }
+  .phone-content { overflow-y: auto; max-height: 820px; }
+
+  /* HERO DETAIL */
+  .detail-hero {
+    background: linear-gradient(160deg, var(--eco-dark), var(--eco-main));
+    padding: .7rem 1rem 1.5rem;
+    color: #fff;
+    position: relative;
+  }
+  .back-btn { color: rgba(255,255,255,.8); text-decoration: none; font-size: .9rem; display: inline-flex; align-items: center; gap: .4rem; margin-bottom: .8rem; }
+  .detail-hero .route-big { font-size: 1.3rem; font-weight: 700; }
+  .detail-hero .route-big .arrow { color: var(--eco-light); margin: 0 .4rem; }
+  .price-bubble { position: absolute; top: .7rem; right: 1rem; background: var(--accent); color: #fff; border-radius: 12px; padding: .4rem .9rem; font-weight: 700; font-size: 1rem; }
+
+  /* SECTION CARDS */
+  .detail-content { padding: 0 1rem 1rem; margin-top: -1rem; }
+  .detail-card { background: #fff; border-radius: 14px; border: 2px solid #e0ece7; padding: 1rem; margin-bottom: .8rem; }
+  .detail-card h6 { font-size: .8rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; letter-spacing: .5px; margin-bottom: .7rem; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 1.5rem; }
+  .timeline::before { content: ''; position: absolute; left: .4rem; top: .6rem; bottom: .6rem; width: 2px; background: var(--eco-light); }
+  .tl-point { position: relative; margin-bottom: .7rem; }
+  .tl-point::before { content: ''; position: absolute; left: -1.2rem; top: .4rem; width: 10px; height: 10px; border-radius: 50%; background: var(--eco-main); border: 2px solid #fff; box-shadow: 0 0 0 2px var(--eco-main); }
+  .tl-point .tl-time { font-size: .75rem; color: var(--eco-mid); font-weight: 700; }
+  .tl-point .tl-city { font-size: .9rem; font-weight: 600; color: var(--eco-dark); }
+  .tl-duration { font-size: .75rem; color: #94a3b8; margin: -.3rem 0 .3rem 0; }
+
+  /* DRIVER */
+  .driver-card { display: flex; align-items: center; gap: .9rem; }
+  .driver-avatar-lg { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 700; color: var(--eco-dark); background: var(--eco-light); flex-shrink: 0; }
+  .driver-meta .name { font-weight: 700; font-size: .95rem; color: var(--eco-dark); }
+  .driver-meta .rating { font-size: .8rem; color: var(--accent); }
+  .driver-meta .rides { font-size: .72rem; color: #94a3b8; }
+
+  /* BADGES */
+  .badge-eco-detail { background: #d8f3dc; color: var(--eco-dark); border-radius: 20px; padding: .3rem .8rem; font-size: .8rem; font-weight: 600; }
+  .badge-seats-detail { background: #f0f7f3; color: var(--eco-dark); border-radius: 20px; padding: .3rem .8rem; font-size: .8rem; }
+  .pref-tag { background: #f8faf9; border: 1px solid #e0ece7; border-radius: 20px; padding: .25rem .7rem; font-size: .75rem; color: #475569; display: inline-flex; align-items: center; gap: .3rem; }
+
+  /* AVIS */
+  .avis-item { border-bottom: 1px solid #f0f7f3; padding-bottom: .7rem; margin-bottom: .7rem; }
+  .avis-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .avis-author { font-size: .8rem; font-weight: 600; color: var(--eco-dark); }
+  .avis-note { font-size: .75rem; color: var(--accent); }
+  .avis-text { font-size: .78rem; color: #64748b; margin-top: .2rem; }
+
+  /* STICKY FOOTER */
+  .sticky-book { background: #fff; border-top: 2px solid #e0ece7; padding: .9rem 1rem; display: flex; align-items: center; justify-content: space-between; position: sticky; bottom: 0; }
+  .sticky-book .price-info { }
+  .sticky-book .price-label { font-size: .72rem; color: #94a3b8; }
+  .sticky-book .price-amount { font-size: 1.3rem; font-weight: 700; color: var(--eco-dark); }
+  .sticky-book .price-unit { font-size: .72rem; color: #64748b; }
+  .btn-book { background: var(--eco-main); color: #fff; border: none; border-radius: 12px; padding: .75rem 1.5rem; font-weight: 700; font-size: .9rem; }
+
+  /* BOTTOM NAV */
+  .bottom-nav { background: #fff; border-top: 2px solid #e0ece7; display: flex; }
+  .bottom-nav a { flex: 1; display: flex; flex-direction: column; align-items: center; padding: .6rem .3rem; color: #94a3b8; text-decoration: none; font-size: .6rem; gap: .2rem; }
+  .bottom-nav a i { font-size: 1.2rem; }
+</style>
+</head>
+<body>
+
+<div class="annotation">📱 MAQUETTE MOBILE — Détail covoiturage EcoRide · 390px · ECF DWWM 2026</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div class="phone-notch-bar"></div></div>
+  <div class="phone-content">
+
+    <!-- HERO DETAIL -->
+    <div class="detail-hero">
+      <a href="#" class="back-btn"><i class="bi bi-arrow-left"></i>Retour aux résultats</a>
+      <div class="route-big">
+        Paris <span class="arrow">→</span> Lyon
+      </div>
+      <div class="mt-1" style="font-size:.82rem;opacity:.8"><i class="bi bi-calendar3 me-1"></i>Mardi 20 mai 2026 &nbsp;·&nbsp; <i class="bi bi-clock me-1"></i>08:00 — 11:30</div>
+      <span class="price-bubble">8 crédits</span>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="detail-content">
+
+      <!-- TRAJET -->
+      <div class="detail-card">
+        <h6><i class="bi bi-map me-1"></i>Itinéraire</h6>
+        <div class="timeline">
+          <div class="tl-point">
+            <div class="tl-time">08:00</div>
+            <div class="tl-city">Paris — Gare de Lyon</div>
+          </div>
+          <div class="tl-duration ps-0" style="padding-left:0;font-size:.72rem;color:#94a3b8;margin:-4px 0 4px 0;padding-left:.3rem">3h 30 de trajet</div>
+          <div class="tl-point">
+            <div class="tl-time">11:30</div>
+            <div class="tl-city">Lyon — Part-Dieu</div>
+          </div>
+        </div>
+        <div class="d-flex gap-2 mt-3 flex-wrap">
+          <span class="badge-eco-detail"><i class="bi bi-lightning-charge-fill me-1"></i>Véhicule électrique</span>
+          <span class="badge-seats-detail"><i class="bi bi-people me-1"></i>2 places disponibles</span>
+        </div>
+      </div>
+
+      <!-- CONDUCTEUR -->
+      <div class="detail-card">
+        <h6><i class="bi bi-person-fill me-1"></i>Conducteur</h6>
+        <div class="driver-card">
+          <div class="driver-avatar-lg">M</div>
+          <div class="driver-meta">
+            <div class="name">Marie Dupont</div>
+            <div class="rating">★★★★☆ <span style="color:#64748b">4.0 / 5</span></div>
+            <div class="rides">12 trajets effectués</div>
+          </div>
+        </div>
+        <div class="d-flex gap-2 flex-wrap mt-3">
+          <span class="pref-tag"><i class="bi bi-music-note"></i> Musique douce</span>
+          <span class="pref-tag"><i class="bi bi-slash-circle"></i> Non-fumeur</span>
+          <span class="pref-tag"><i class="bi bi-paw"></i> Animaux OK</span>
+          <span class="pref-tag"><i class="bi bi-chat-dots"></i> Bavard</span>
+        </div>
+      </div>
+
+      <!-- VÉHICULE -->
+      <div class="detail-card">
+        <h6><i class="bi bi-car-front-fill me-1"></i>Véhicule</h6>
+        <div class="d-flex align-items-center gap-3">
+          <div style="width:48px;height:48px;background:#f0fff4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem">🚗</div>
+          <div>
+            <div class="fw-semibold" style="font-size:.9rem">Tesla Model 3</div>
+            <div style="font-size:.75rem;color:#64748b">Bleu · 2022 · AB-123-CD</div>
+            <div class="mt-1"><span class="badge-eco-detail" style="font-size:.7rem"><i class="bi bi-lightning-charge-fill me-1"></i>Électrique — 0g CO₂/km</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AVIS -->
+      <div class="detail-card">
+        <h6><i class="bi bi-star-fill me-1"></i>Avis passagers (3)</h6>
+        <div class="avis-item">
+          <div class="d-flex justify-content-between">
+            <span class="avis-author">Jean-Pierre L.</span>
+            <span class="avis-note">★★★★★</span>
+          </div>
+          <div class="avis-text">Conductrice très sympathique, ponctuelle et véhicule confortable !</div>
+        </div>
+        <div class="avis-item">
+          <div class="d-flex justify-content-between">
+            <span class="avis-author">Amélie K.</span>
+            <span class="avis-note">★★★★☆</span>
+          </div>
+          <div class="avis-text">Bon trajet, musique agréable, léger retard au départ.</div>
+        </div>
+        <div class="avis-item">
+          <div class="d-flex justify-content-between">
+            <span class="avis-author">Romain S.</span>
+            <span class="avis-note">★★★★☆</span>
+          </div>
+          <div class="avis-text">Très bien, je recommande Marie.</div>
+        </div>
+      </div>
+
+      <!-- ESPACE STICKY -->
+      <div style="height:80px"></div>
+
+    </div>
+
+    <!-- STICKY BOOK BAR -->
+    <div class="sticky-book">
+      <div class="price-info">
+        <div class="price-label">Coût du trajet</div>
+        <div><span class="price-amount">8</span> <span class="price-unit">crédits</span></div>
+      </div>
+      <button class="btn-book"><i class="bi bi-check-circle me-2"></i>Réserver</button>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <a href="#"><i class="bi bi-house-fill"></i>Accueil</a>
+      <a href="#" class="active" style="color:var(--eco-main)"><i class="bi bi-search"></i>Recherche</a>
+      <a href="#"><i class="bi bi-plus-circle-fill" style="color:var(--eco-main);font-size:1.6rem"></i>Proposer</a>
+      <a href="#"><i class="bi bi-clock-history"></i>Historique</a>
+      <a href="#"><i class="bi bi-person-fill"></i>Profil</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

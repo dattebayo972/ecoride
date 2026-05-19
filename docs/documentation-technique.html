@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoRide — Documentation Technique</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Poppins', sans-serif; background: #fff; color: #1e293b; line-height: 1.7; }
+@media print {
+  .no-print { display: none !important; }
+  body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .page-break { page-break-before: always; }
+  section, .doc-card { page-break-inside: avoid; }
+}
+.page { max-width: 900px; margin: 0 auto; padding: 2.5rem 2rem; }
+
+/* COVER */
+.cover {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 55%, #1b4332 100%);
+  color: #fff; padding: 80px 60px; min-height: 400px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.cover::before { content: '</> '; position: absolute; top: 30px; right: 60px; font-size: 8rem; opacity: .05; font-family: monospace; }
+.cover .logo { font-size: 2.8rem; font-weight: 800; }
+.cover .logo span { color: #74c69d; }
+.cover h1 { font-size: 2rem; font-weight: 700; margin-top: 2rem; }
+.cover .subtitle { font-size: 1rem; opacity: .8; margin-top: .5rem; }
+.cover .meta { margin-top: 2.5rem; font-size: .82rem; opacity: .55; border-top: 1px solid rgba(255,255,255,.15); padding-top: 1rem; }
+
+/* TOC */
+.toc { background: #f0f9ff; border: 2px solid #bae6fd; border-radius: 14px; padding: 1.8rem 2rem; margin: 2rem 0; }
+.toc h3 { color: #0c4a6e; font-weight: 700; margin-bottom: 1rem; font-size: 1rem; }
+.toc ol { padding-left: 1.2rem; }
+.toc li { margin-bottom: .4rem; font-size: .9rem; }
+.toc li a { color: #0369a1; text-decoration: none; font-weight: 500; }
+
+/* HEADINGS */
+h2 { font-size: 1.4rem; font-weight: 700; color: #0c4a6e; border-left: 5px solid #0369a1; padding-left: 1rem; margin: 2.5rem 0 1rem; }
+h3 { font-size: 1.05rem; font-weight: 700; color: #1b4332; margin: 1.5rem 0 .7rem; }
+h4 { font-size: .95rem; font-weight: 600; color: #1e293b; margin: 1.2rem 0 .5rem; }
+p { margin-bottom: .8rem; color: #334155; font-size: .92rem; }
+hr { height: 2px; background: linear-gradient(to right, #0369a1, #74c69d, transparent); border: none; margin: 2rem 0; }
+
+/* CODE BLOCKS */
+pre {
+  background: #0f172a; color: #e2e8f0; border-radius: 10px;
+  padding: 1.2rem 1.5rem; overflow-x: auto; font-size: .82rem;
+  line-height: 1.6; margin: 1rem 0; font-family: 'Cascadia Code', 'Consolas', monospace;
+}
+pre .comment { color: #64748b; }
+pre .keyword { color: #c084fc; }
+pre .string { color: #86efac; }
+pre .variable { color: #67e8f9; }
+pre .function { color: #fbbf24; }
+pre .tag { color: #f87171; }
+code { background: #f1f5f9; border-radius: 4px; padding: .15rem .45rem; font-size: .85rem; color: #1b4332; font-family: monospace; }
+
+/* TECH STACK TABLE */
+.stack-table { width: 100%; border-collapse: collapse; font-size: .88rem; margin: 1rem 0; }
+.stack-table th { background: #0c4a6e; color: #fff; padding: .7rem 1rem; text-align: left; font-weight: 600; }
+.stack-table td { border: 1px solid #e0ece7; padding: .65rem 1rem; vertical-align: middle; }
+.stack-table tr:nth-child(even) td { background: #f8faf9; }
+.tech-badge { display: inline-block; border-radius: 6px; padding: .2rem .6rem; font-size: .78rem; font-weight: 700; }
+.tb-php { background: #4f46e5; color: #fff; }
+.tb-mysql { background: #f97316; color: #fff; }
+.tb-mongo { background: #16a34a; color: #fff; }
+.tb-bootstrap { background: #7c3aed; color: #fff; }
+.tb-js { background: #ca8a04; color: #fff; }
+.tb-git { background: #dc2626; color: #fff; }
+.tb-heroku { background: #7c3aed; color: #fff; }
+
+/* FOLDER TREE */
+.tree { background: #0f172a; color: #e2e8f0; border-radius: 10px; padding: 1.2rem 1.5rem; font-family: monospace; font-size: .82rem; line-height: 1.8; margin: 1rem 0; }
+.tree .dir { color: #67e8f9; font-weight: 700; }
+.tree .file { color: #e2e8f0; }
+.tree .comment { color: #475569; }
+
+/* ALERT BOXES */
+.alert-box { border-radius: 10px; padding: 1rem 1.2rem; margin: 1rem 0; font-size: .88rem; display: flex; gap: .8rem; align-items: flex-start; }
+.alert-info { background: #e0f2fe; border-left: 4px solid #0369a1; color: #0c4a6e; }
+.alert-success { background: #f0fff4; border-left: 4px solid #2d6a4f; color: #14532d; }
+.alert-warning { background: #fffbeb; border-left: 4px solid #f4a261; color: #78350f; }
+.alert-box i { font-size: 1.2rem; flex-shrink: 0; margin-top: .1rem; }
+
+/* DOC CARDS */
+.doc-card { background: #fff; border: 2px solid #e0ece7; border-radius: 12px; padding: 1.3rem; margin-bottom: 1rem; }
+.doc-card h4 { color: #0c4a6e; margin-bottom: .5rem; }
+
+/* SECURITY GRID */
+.sec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1rem 0; }
+.sec-item { background: #f8faf9; border: 2px solid #e0ece7; border-radius: 10px; padding: 1rem; }
+.sec-item h5 { color: #1b4332; font-size: .88rem; font-weight: 700; margin-bottom: .4rem; }
+.sec-item p { font-size: .8rem; color: #64748b; margin: 0; }
+.sec-badge { display: inline-block; background: #d8f3dc; color: #1b4332; border-radius: 20px; padding: .15rem .6rem; font-size: .72rem; font-weight: 700; margin-bottom: .4rem; }
+
+/* STEPS */
+.deploy-steps { counter-reset: ds; }
+.ds { display: flex; gap: 1rem; margin-bottom: 1rem; }
+.ds-num { counter-increment: ds; width: 32px; height: 32px; border-radius: 50%; background: #0369a1; color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: .9rem; }
+.ds-num::before { content: counter(ds); }
+.ds-content h4 { margin-top: 0; color: #0c4a6e; font-size: .92rem; }
+.ds-content p { margin-bottom: 0; font-size: .85rem; }
+
+.print-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #0369a1; color: #fff; border: none; border-radius: 50px; padding: .7rem 1.5rem; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; box-shadow: 0 4px 16px rgba(3,105,161,.3); z-index: 999; font-size: .9rem; }
+
+/* TABLE GENERIC */
+.generic-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: .8rem 0; }
+.generic-table th { background: #1b4332; color: #fff; padding: .6rem .9rem; text-align: left; }
+.generic-table td { border: 1px solid #e0ece7; padding: .55rem .9rem; }
+.generic-table tr:nth-child(even) td { background: #f8faf9; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="logo">🌿 Eco<span>Ride</span></div>
+  <h1>Documentation Technique</h1>
+  <div class="subtitle">Architecture · Stack technologique · Déploiement · Sécurité</div>
+  <div class="meta">
+    Version 1.0 &nbsp;·&nbsp; ECF DWWM 2026 &nbsp;·&nbsp; Mai 2026<br>
+    PHP 8.1 · MySQL 8 · MongoDB · Bootstrap 5 · XAMPP local · Heroku production
+  </div>
+</div>
+
+<div class="page">
+
+<!-- TOC -->
+<div class="toc">
+  <h3>📋 Table des matières</h3>
+  <ol>
+    <li><a href="#stack">Stack technologique — Choix et justifications</a></li>
+    <li><a href="#architecture">Architecture du projet</a></li>
+    <li><a href="#bdd">Base de données — MySQL & MongoDB</a></li>
+    <li><a href="#securite">Sécurité</a></li>
+    <li><a href="#env-local">Installation locale (XAMPP)</a></li>
+    <li><a href="#env-heroku">Déploiement Heroku</a></li>
+    <li><a href="#api">Flux de données — Pages et actions clés</a></li>
+    <li><a href="#performances">Performances & Bonnes pratiques</a></li>
+  </ol>
+</div>
+
+<!-- ─── 1. STACK ─── -->
+<h2 id="stack">1. Stack technologique</h2>
+
+<table class="stack-table">
+  <thead>
+    <tr><th>Couche</th><th>Technologie</th><th>Version</th><th>Justification</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Backend</td>
+      <td><span class="tech-badge tb-php">PHP</span> PDO</td>
+      <td>8.1+</td>
+      <td>Langage imposé par l'ECF. PDO natif pour la sécurité (requêtes préparées) et la portabilité.</td>
+    </tr>
+    <tr>
+      <td>BDD relationnelle</td>
+      <td><span class="tech-badge tb-mysql">MySQL</span></td>
+      <td>8.0</td>
+      <td>SGBD principal. Intégrité référentielle (FK), transactions ACID pour la gestion des crédits.</td>
+    </tr>
+    <tr>
+      <td>BDD documentaire</td>
+      <td><span class="tech-badge tb-mongo">MongoDB</span></td>
+      <td>Atlas 7</td>
+      <td>Stockage optionnel des avis (schéma flexible, requêtes analytiques). Fallback gracieux si indisponible.</td>
+    </tr>
+    <tr>
+      <td>Frontend CSS</td>
+      <td><span class="tech-badge tb-bootstrap">Bootstrap</span> 5.3</td>
+      <td>5.3.2</td>
+      <td>Framework CSS responsive via CDN. Grid, composants, utilitaires — compatible mobile-first.</td>
+    </tr>
+    <tr>
+      <td>Frontend JS</td>
+      <td><span class="tech-badge tb-js">JavaScript</span> ES6</td>
+      <td>Natif</td>
+      <td>Interactions légères (indicateur mdp, filtres auto-submit, modales). Aucun framework JS requis.</td>
+    </tr>
+    <tr>
+      <td>Graphiques</td>
+      <td>Chart.js</td>
+      <td>4.4</td>
+      <td>Graphiques statistiques dans l'espace admin (covoiturages/jour, crédits/jour) via CDN.</td>
+    </tr>
+    <tr>
+      <td>Icônes</td>
+      <td>Bootstrap Icons</td>
+      <td>1.11.3</td>
+      <td>Bibliothèque d'icônes SVG cohérente avec Bootstrap 5.</td>
+    </tr>
+    <tr>
+      <td>Typographie</td>
+      <td>Poppins (Google Fonts)</td>
+      <td>—</td>
+      <td>Police humaniste sans-serif, excellente lisibilité web, 4 graisses utilisées (300–700).</td>
+    </tr>
+    <tr>
+      <td>Versioning</td>
+      <td><span class="tech-badge tb-git">Git</span></td>
+      <td>2.x</td>
+      <td>Git flow : main ← develop ← feature/US1 … feature/US13. Dépôt GitHub public.</td>
+    </tr>
+    <tr>
+      <td>Déploiement</td>
+      <td><span class="tech-badge tb-heroku">Heroku</span></td>
+      <td>—</td>
+      <td>PaaS PHP natif. JawsDB MySQL add-on. Procfile + composer.json pour le build.</td>
+    </tr>
+    <tr>
+      <td>Env. local</td>
+      <td>XAMPP</td>
+      <td>8.2</td>
+      <td>Apache + PHP + MySQL + phpMyAdmin sur Windows. Chemin : <code>C:\xampp\htdocs\projet_tristan_ecoride\ecoride\</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- ─── 2. ARCHITECTURE ─── -->
+<h2 id="architecture">2. Architecture du projet</h2>
+
+<p>EcoRide adopte un pattern <strong>MVC-lite</strong> (sans framework) : séparation logique entre vues (pages <code>public/</code>), modèles (<code>src/models/</code>) et helpers (<code>src/helpers/</code>).</p>
+
+<div class="tree">
+<span class="dir">ecoride/</span>
+├── <span class="dir">public/</span>               <span class="comment">← Pages web accessibles</span>
+│   ├── index.php            <span class="comment">← Accueil (US1, US2)</span>
+│   ├── covoiturages.php     <span class="comment">← Recherche + filtres (US3, US4)</span>
+│   ├── detail.php           <span class="comment">← Fiche trajet (US5, US6)</span>
+│   ├── inscription.php      <span class="comment">← US7</span>
+│   ├── connexion.php        <span class="comment">← Login</span>
+│   ├── espace-utilisateur.php <span class="comment">← US8 (profil, rôles, véhicules, préfs)</span>
+│   ├── saisir-voyage.php    <span class="comment">← US9 (chauffeur)</span>
+│   ├── historique.php       <span class="comment">← US10 + US11 (chauffeur + passager)</span>
+│   ├── espace-employe.php   <span class="comment">← US12 (modération)</span>
+│   ├── espace-admin.php     <span class="comment">← US13 (stats, admin)</span>
+│   └── assets/
+│       ├── css/style.css    <span class="comment">← Thème custom + CSS variables</span>
+│       ├── js/main.js       <span class="comment">← Interactions côté client</span>
+│       └── img/             <span class="comment">← Logo, avatar-default, uploads/</span>
+│
+├── <span class="dir">src/</span>
+│   ├── <span class="dir">config/</span>
+│   │   ├── db_mysql.php     <span class="comment">← getPDO() — singleton PDO + loadEnv()</span>
+│   │   └── db_mongo.php     <span class="comment">← getMongo() — fallback null</span>
+│   ├── <span class="dir">helpers/</span>
+│   │   ├── auth.php         <span class="comment">← BASE_URL, session, roles, CSRF</span>
+│   │   ├── functions.php    <span class="comment">← h(), flash, formatDate, starRating…</span>
+│   │   └── mail.php         <span class="comment">← sendMail(), mailFinTrajet(), mailLitige()</span>
+│   ├── <span class="dir">models/</span>
+│   │   ├── UserModel.php    <span class="comment">← CRUD utilisateur, crédits, rôles</span>
+│   │   ├── CovoiturageModel.php <span class="comment">← Search, CRUD, stats admin</span>
+│   │   ├── AvisModel.php    <span class="comment">← Dual-write MySQL + MongoDB</span>
+│   │   ├── VoitureModel.php <span class="comment">← Véhicules par utilisateur</span>
+│   │   └── MarqueModel.php  <span class="comment">← getAll() pour dropdown</span>
+│   └── <span class="dir">components/</span>
+│       ├── header.php       <span class="comment">← &lt;head&gt; + Bootstrap CDN</span>
+│       ├── navbar.php       <span class="comment">← Navigation adaptative par rôle</span>
+│       └── footer.php       <span class="comment">← Footer + Bootstrap JS</span>
+│
+├── <span class="dir">sql/</span>
+│   ├── create_tables.sql    <span class="comment">← 10 tables + FK</span>
+│   └── seed_data.sql        <span class="comment">← Données de test</span>
+│
+├── <span class="dir">docs/</span>                  <span class="comment">← Livrables ECF</span>
+│   ├── mockups/             <span class="comment">← 6 maquettes HTML</span>
+│   ├── charte-graphique.html
+│   ├── diagrammes.html
+│   ├── manuel-utilisateur.html
+│   └── documentation-technique.html (ce fichier)
+│
+├── .env                     <span class="comment">← Variables d'environnement (gitignore)</span>
+├── .env.example             <span class="comment">← Template</span>
+├── .gitignore
+├── Procfile                 <span class="comment">← Heroku : web: vendor/bin/heroku-php-apache2 public/</span>
+├── composer.json            <span class="comment">← PHP 8.1 requirement</span>
+├── app.json                 <span class="comment">← Heroku one-click deploy config</span>
+├── KANBAN.md
+└── README.md
+</div>
+
+<h3>2.1 — Pattern de chargement des pages</h3>
+<p>Chaque page PHP suit le même ordre d'inclusion :</p>
+<pre><span class="comment">// 1. Session + BASE_URL + helpers</span>
+<span class="keyword">require_once</span> <span class="string">'../src/helpers/auth.php'</span>;
+<span class="keyword">require_once</span> <span class="string">'../src/helpers/functions.php'</span>;
+
+<span class="comment">// 2. Modèles nécessaires (qui incluent db_mysql.php)</span>
+<span class="keyword">require_once</span> <span class="string">'../src/models/CovoiturageModel.php'</span>;
+
+<span class="comment">// 3. Contrôle d'accès (si page protégée)</span>
+<span class="function">requireLogin</span>();
+<span class="function">requireRole</span>(<span class="string">'chauffeur'</span>);
+
+<span class="comment">// 4. Traitement POST (formulaires)</span>
+<span class="keyword">if</span> ($_SERVER[<span class="string">'REQUEST_METHOD'</span>] === <span class="string">'POST'</span>) { <span class="function">verifyCsrf</span>(); ... }
+
+<span class="comment">// 5. Rendu HTML</span>
+<span class="keyword">include</span> <span class="string">'../src/components/header.php'</span>;
+<span class="keyword">include</span> <span class="string">'../src/components/navbar.php'</span>;
+<span class="comment">// ... HTML de la page ...</span>
+<span class="keyword">include</span> <span class="string">'../src/components/footer.php'</span>;</pre>
+
+<hr>
+
+<!-- ─── 3. BDD ─── -->
+<h2 id="bdd">3. Base de données</h2>
+
+<h3>3.1 — MySQL — Schéma des tables</h3>
+
+<table class="generic-table">
+  <thead><tr><th>Table</th><th>Colonnes clés</th><th>Relations</th></tr></thead>
+  <tbody>
+    <tr><td><code>utilisateur</code></td><td>utilisateur_id, pseudo, email, mot_de_passe (bcrypt), credits, statut</td><td>1:N → voiture, covoiturage, participe</td></tr>
+    <tr><td><code>role</code></td><td>role_id, libelle (visiteur/passager/chauffeur/employé/administrateur)</td><td>N:N → utilisateur via utilisateur_role</td></tr>
+    <tr><td><code>utilisateur_role</code></td><td>utilisateur_id (FK), role_id (FK), date_attribution</td><td>Table pivot</td></tr>
+    <tr><td><code>marque</code></td><td>marque_id, libelle (Tesla, Renault…)</td><td>1:N → voiture</td></tr>
+    <tr><td><code>voiture</code></td><td>voiture_id, utilisateur_id (FK), marque_id (FK), modele, energie</td><td>N:1 → marque</td></tr>
+    <tr><td><code>covoiturage</code></td><td>covoiturage_id, chauffeur_id (FK), voiture_id (FK), statut, prix_par_personne</td><td>1:N → participe, avis</td></tr>
+    <tr><td><code>participe</code></td><td>covoiturage_id (FK), passager_id (FK), statut, credits_debites</td><td>Table pivot avec statut métier</td></tr>
+    <tr><td><code>avis</code></td><td>avis_id, covoiturage_id (FK), auteur_id (FK), note, statut (en_attente/validé/refusé)</td><td>Dual-write vers MongoDB</td></tr>
+    <tr><td><code>parametre</code></td><td>parametre_id, libelle (fumeur, animaux…)</td><td>N:N → utilisateur via dispose</td></tr>
+    <tr><td><code>dispose</code></td><td>utilisateur_id (FK), parametre_id (FK), valeur (BOOLEAN)</td><td>Table pivot préférences</td></tr>
+    <tr><td><code>preference_libre</code></td><td>pref_id, utilisateur_id (FK), libelle_libre</td><td>Texte libre</td></tr>
+  </tbody>
+</table>
+
+<h3>3.2 — Singleton PDO</h3>
+<pre><span class="keyword">function</span> <span class="function">getPDO</span>(): PDO {
+    <span class="keyword">static</span> <span class="variable">$pdo</span> = <span class="keyword">null</span>;
+    <span class="keyword">if</span> (<span class="variable">$pdo</span> !== <span class="keyword">null</span>) <span class="keyword">return</span> <span class="variable">$pdo</span>;
+
+    <span class="variable">$pdo</span> = <span class="keyword">new</span> PDO(
+        <span class="string">"mysql:host={$host};dbname={$name};charset=utf8mb4"</span>,
+        <span class="variable">$user</span>, <span class="variable">$pass</span>,
+        [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => <span class="keyword">false</span>, <span class="comment">// Requêtes préparées vraies</span>
+        ]
+    );
+    <span class="keyword">return</span> <span class="variable">$pdo</span>;
+}</pre>
+
+<h3>3.3 — MongoDB — Dual-write avis</h3>
+<p>À chaque insertion/modification d'avis dans MySQL, un document est synchronisé dans la collection <code>avis</code> de MongoDB Atlas :</p>
+<pre><span class="comment">// Structure document MongoDB</span>
+{
+  <span class="string">"_id"</span>: ObjectId,
+  <span class="string">"avis_id"</span>: 42,          <span class="comment">// sync avec MySQL</span>
+  <span class="string">"covoiturage_id"</span>: 12,
+  <span class="string">"auteur_pseudo"</span>: <span class="string">"marie_d"</span>,
+  <span class="string">"note"</span>: 4,
+  <span class="string">"commentaire"</span>: <span class="string">"Très bon trajet !"</span>,
+  <span class="string">"statut"</span>: <span class="string">"validé"</span>,
+  <span class="string">"date_avis"</span>: ISODate(<span class="string">"2026-05-18"</span>)
+}</pre>
+<p>Si la connexion MongoDB échoue, <code>getMongo()</code> retourne <code>null</code> et le code PHP vérifie avant toute écriture (pas d'erreur fatale).</p>
+
+<hr>
+
+<!-- ─── 4. SÉCURITÉ ─── -->
+<h2 id="securite">4. Sécurité</h2>
+
+<div class="sec-grid">
+  <div class="sec-item">
+    <span class="sec-badge">OWASP A01</span>
+    <h5>Contrôle d'accès</h5>
+    <p><code>requireLogin()</code>, <code>requireRole()</code>, <code>requireActive()</code> en tête de chaque page protégée. Vérification systématique que l'utilisateur connecté est propriétaire des ressources qu'il modifie (ex: chauffeur_id = $_SESSION['user_id']).</p>
+  </div>
+  <div class="sec-item">
+    <span class="sec-badge">OWASP A02</span>
+    <h5>Mots de passe</h5>
+    <p><code>password_hash($mdp, PASSWORD_BCRYPT)</code> à l'inscription. <code>password_verify()</code> à la connexion. Politique forte imposée : ≥ 8 caractères, 1 majuscule, 1 chiffre, 1 spécial. <code>session_regenerate_id(true)</code> après login.</p>
+  </div>
+  <div class="sec-item">
+    <span class="sec-badge">OWASP A03</span>
+    <h5>Injections SQL</h5>
+    <p>100% PDO avec requêtes préparées (<code>$pdo->prepare()</code> + <code>execute([])</code>). <code>PDO::ATTR_EMULATE_PREPARES = false</code> force les vraies requêtes préparées côté serveur MySQL.</p>
+  </div>
+  <div class="sec-item">
+    <span class="sec-badge">OWASP A03</span>
+    <h5>XSS (Cross-Site Scripting)</h5>
+    <p>Toute variable affichée dans le HTML passe par <code>h($var)</code> = <code>htmlspecialchars($str, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')</code>. Aucune valeur utilisateur affichée sans échappement.</p>
+  </div>
+  <div class="sec-item">
+    <span class="sec-badge">OWASP A05</span>
+    <h5>CSRF</h5>
+    <p>Chaque formulaire POST inclut <code>&lt;?= csrfField() ?&gt;</code>. Le handler vérifie <code>hash_equals(csrfToken(), $_POST['csrf_token'])</code>. Token régénéré à chaque session.</p>
+  </div>
+  <div class="sec-item">
+    <span class="sec-badge">OWASP A09</span>
+    <h5>Variables d'environnement</h5>
+    <p>Toutes les credentials (DB_PASS, MONGO_URI, MAIL_PASS) sont dans <code>.env</code> (gitignore). Le fichier <code>.env.example</code> sert de template sans valeurs sensibles.</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- ─── 5. ENV LOCAL ─── -->
+<h2 id="env-local">5. Installation locale (XAMPP)</h2>
+
+<div class="deploy-steps">
+  <div class="ds">
+    <div class="ds-num"></div>
+    <div class="ds-content">
+      <h4>Cloner le projet</h4>
+      <pre>git clone https://github.com/votre-username/ecoride.git "C:/xampp/htdocs/projet_tristan_ecoride/ecoride"</pre>
+    </div>
+  </div>
+  <div class="ds">
+    <div class="ds-num"></div>
+    <div class="ds-content">
+      <h4>Configurer les variables d'environnement</h4>
+      <pre>cp .env.example .env
+<span class="comment"># Éditer .env :</span>
+DB_HOST=localhost
+DB_NAME=ecoride
+DB_USER=root
+DB_PASS=</pre>
+    </div>
+  </div>
+  <div class="ds">
+    <div class="ds-num"></div>
+    <div class="ds-content">
+      <h4>Créer la base de données dans phpMyAdmin</h4>
+      <p>1. Ouvrir <code>http://localhost/phpmyadmin</code><br>
+      2. Créer la base <code>ecoride</code> (charset <code>utf8mb4</code>)<br>
+      3. Importer <code>sql/create_tables.sql</code> puis <code>sql/seed_data.sql</code></p>
+    </div>
+  </div>
+  <div class="ds">
+    <div class="ds-num"></div>
+    <div class="ds-content">
+      <h4>Lancer XAMPP</h4>
+      <p>Démarrer Apache et MySQL depuis le Control Panel XAMPP.</p>
+    </div>
+  </div>
+  <div class="ds">
+    <div class="ds-num"></div>
+    <div class="ds-content">
+      <h4>Accéder à l'application</h4>
+      <pre>http://localhost/projet_tristan_ecoride/ecoride/public/</pre>
+      <p>La détection automatique de <code>BASE_URL</code> via <code>SCRIPT_NAME</code> gère le chemin avec espace.</p>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ─── 6. HEROKU ─── -->
+<h2 id="env-heroku" class="page-break">6. Déploiement Heroku</h2>
+
+<h3>6.1 — Prérequis</h3>
+<ul style="margin-left:1.2rem;font-size:.9rem;color:#334155;margin-bottom:1rem">
+  <li>Compte Heroku (plan Eco ou Basic)</li>
+  <li>Heroku CLI installé : <code>brew install heroku/brew/heroku</code> (Mac) ou installateur Windows</li>
+  <li>Add-on JawsDB MySQL (base de données cloud)</li>
+</ul>
+
+<h3>6.2 — Fichiers de déploiement inclus</h3>
+<div class="doc-card">
+  <h4>Procfile</h4>
+  <pre>web: vendor/bin/heroku-php-apache2 public/</pre>
+  <p style="font-size:.82rem;color:#64748b;margin-top:.5rem">Indique à Heroku d'utiliser Apache comme serveur web et de servir depuis le dossier <code>public/</code>.</p>
+</div>
+<div class="doc-card">
+  <h4>composer.json</h4>
+  <pre>{
+    <span class="string">"require"</span>: { <span class="string">"php"</span>: <span class="string">">=8.1"</span> }
+}</pre>
+  <p style="font-size:.82rem;color:#64748b;margin-top:.5rem">Spécifie la version PHP minimale. Heroku installe automatiquement la version correspondante.</p>
+</div>
+
+<h3>6.3 — Procédure de déploiement</h3>
+<div class="deploy-steps">
+  <div class="ds">
+    <div class="ds-num"></div>
+    <div class="ds-content">
+      <h4>Login Heroku</h4>
+      <pre>heroku login</pre>
+    </div>
+  </div>
+  <div class="ds">
+    <div class="ds-num"></div>
+    <div class="ds-content">
+      <h4>Créer l'application</h4>
+      <pre>heroku create ecoride-app</pre>
+    </div>
+  </div>
+  <div class="ds">
+    <div class="ds-num"></div>
+    <div class="ds-content">
+      <h4>Ajouter JawsDB (MySQL cloud)</h4>
+      <pre>heroku addons:create jawsdb:kitefin</pre>
+      <p style="font-size:.82rem;color:#64748b">JawsDB expose automatiquement <code>JAWSDB_URL</code> comme variable d'env.</p>
+    </div>
+  </div>
+  <div class="ds">
+    <div class="ds-num"></div>
+    <div class="ds-content">
+      <h4>Configurer les variables d'environnement</h4>
+      <pre>heroku config:set DB_HOST=xxxxx.cleardb.net \
+    DB_NAME=heroku_xxxxx \
+    DB_USER=xxxxx \
+    DB_PASS=xxxxx \
+    APP_URL=https://ecoride-app.herokuapp.com \
+    MAIL_FROM=noreply@ecoride.fr</pre>
+    </div>
+  </div>
+  <div class="ds">
+    <div class="ds-num"></div>
+    <div class="ds-content">
+      <h4>Pousser le code</h4>
+      <pre>git push heroku main</pre>
+    </div>
+  </div>
+  <div class="ds">
+    <div class="ds-num"></div>
+    <div class="ds-content">
+      <h4>Initialiser la base de données</h4>
+      <pre>heroku run php -r "..."
+<span class="comment"># Ou importer via MySQL Workbench connecté à JawsDB</span></pre>
+    </div>
+  </div>
+</div>
+
+<div class="alert-box alert-warning">
+  <i class="bi bi-exclamation-triangle-fill"></i>
+  <div><strong>Note sessions :</strong> Heroku peut réinitialiser le système de fichiers à chaque déploiement. Les uploads de photos utilisateurs sont perdus. En production, utiliser un service comme AWS S3 ou Cloudinary pour le stockage des fichiers.</div>
+</div>
+
+<hr>
+
+<!-- ─── 7. FLUX ─── -->
+<h2 id="api">7. Flux de données — Actions clés</h2>
+
+<h3>7.1 — Recherche de covoiturages</h3>
+<pre>GET /covoiturages.php?depart=Paris&arrivee=Lyon&date=2026-05-20
+                     &eco=1&prix_max=20&duree_max=4&note_min=4
+
+→ CovoiturageModel::search($filters)
+  → SELECT cov.*, u.pseudo, u.photo, AVG(a.note) as note_moy
+     FROM covoiturage cov
+     JOIN utilisateur u ON cov.chauffeur_id = u.utilisateur_id
+     LEFT JOIN avis a ON a.covoiturage_id = cov.covoiturage_id AND a.statut = 'valide'
+     JOIN voiture v ON cov.voiture_id = v.voiture_id
+     WHERE cov.lieu_depart LIKE :dep
+       AND cov.lieu_arrivee LIKE :arr
+       AND cov.date_depart = :date
+       AND cov.statut = 'planifié'
+       AND cov.nb_places > 0
+       [AND v.energie = 'electrique']  ← si filtre eco
+       [AND cov.prix_par_personne &lt;= :prix_max]
+       [AND TIMESTAMPDIFF(MINUTE, cov.heure_depart, cov.heure_arrivee) &lt;= :duree_max]
+     HAVING [note_moy >= :note_min]
+     ORDER BY cov.date_depart, cov.heure_depart</pre>
+
+<h3>7.2 — Transaction de réservation</h3>
+<pre><span class="keyword">try</span> {
+    <span class="function">getPDO</span>()->beginTransaction();
+
+    <span class="comment">// 1. Insérer la participation</span>
+    <span class="variable">$stmt</span> = <span class="function">getPDO</span>()->prepare(
+        <span class="string">"INSERT INTO participe (covoiturage_id, passager_id, statut, credits_debites)
+         VALUES (:cov, :pass, 'reserve', :credits)"</span>
+    );
+
+    <span class="comment">// 2. Déduire les crédits du passager</span>
+    <span class="function">getPDO</span>()->prepare(
+        <span class="string">"UPDATE utilisateur SET credits = credits - :prix WHERE utilisateur_id = :id"</span>
+    )->execute([...]);
+
+    <span class="comment">// 3. Décrémenter les places</span>
+    <span class="function">getPDO</span>()->prepare(
+        <span class="string">"UPDATE covoiturage SET nb_places = nb_places - 1 WHERE covoiturage_id = :id"</span>
+    )->execute([...]);
+
+    <span class="function">getPDO</span>()->commit();
+} <span class="keyword">catch</span> (Exception <span class="variable">$e</span>) {
+    <span class="function">getPDO</span>()->rollBack();
+    <span class="function">setFlash</span>(<span class="string">'error'</span>, <span class="string">'Erreur lors de la réservation.'</span>);
+}</pre>
+
+<hr>
+
+<!-- ─── 8. PERF ─── -->
+<h2 id="performances">8. Performances & Bonnes pratiques</h2>
+
+<table class="generic-table">
+  <thead><tr><th>Pratique</th><th>Implémentation</th></tr></thead>
+  <tbody>
+    <tr><td>Connexion BDD singleton</td><td><code>static $pdo</code> dans <code>getPDO()</code> — une seule connexion par requête HTTP</td></tr>
+    <tr><td>CDN pour les assets lourds</td><td>Bootstrap, Bootstrap Icons, Poppins, Chart.js — tous via CDN (cache navigateur)</td></tr>
+    <tr><td>Requêtes préparées réutilisées</td><td>Les modèles préparent une fois et exécutent N fois</td></tr>
+    <tr><td>Pas de N+1 query</td><td>Les jointures SQL récupèrent le conducteur et la note en une seule requête</td></tr>
+    <tr><td>Variables CSS</td><td><code>--eco-dark</code>, <code>--eco-main</code>… — palette centralisée, changeable en une ligne</td></tr>
+    <tr><td>BASE_URL dynamique</td><td>Détection via <code>SCRIPT_NAME</code> regex — fonctionne dans tous les environnements (local, Heroku)</td></tr>
+    <tr><td>Flash messages</td><td>Un seul message en session, lu une fois puis supprimé — pas de duplication</td></tr>
+    <tr><td>MongoDB fallback</td><td><code>getMongo()</code> retourne <code>null</code> si l'extension PHP MongoDB est absente — pas d'erreur fatale</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:2rem 0;font-size:.8rem;color:#94a3b8">
+  EcoRide · Documentation Technique v1.0 · ECF DWWM 2026<br>
+  Pour exporter en PDF : <kbd>Ctrl+P</kbd> → <em>Enregistrer en PDF</em>
+</div>
+
+</div>
+
+<button class="print-btn no-print" onclick="window.print()">🖨️ Exporter en PDF</button>
+
+</body>
+</html>

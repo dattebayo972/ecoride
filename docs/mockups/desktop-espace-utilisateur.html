@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoRide — Espace utilisateur (Desktop Mockup)</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --eco-dark:  #1b4332;
+    --eco-main:  #2d6a4f;
+    --eco-mid:   #40916c;
+    --eco-light: #74c69d;
+    --accent:    #f4a261;
+  }
+  body { font-family: 'Poppins', sans-serif; background: #f8faf9; padding-top: 24px; }
+  .annotation { position: fixed; top: 0; left: 0; right: 0; background: #1e293b; color: #94a3b8; text-align: center; font-size: .75rem; padding: .3rem; z-index: 9999; font-family: monospace; }
+  .navbar { background: var(--eco-dark); padding: .8rem 2rem; }
+  .navbar-brand { color: #fff !important; font-weight: 700; font-size: 1.4rem; }
+  .navbar-brand span { color: var(--eco-light); }
+  .nav-link { color: rgba(255,255,255,.85) !important; font-weight: 500; }
+  .nav-link:hover, .nav-link.active { color: var(--eco-light) !important; }
+  .credits-badge { background: var(--accent); color: #fff; border-radius: 20px; padding: .25rem .8rem; font-weight: 700; font-size: .85rem; }
+
+  /* PAGE HEADER */
+  .page-header { background: linear-gradient(135deg, var(--eco-dark), var(--eco-main)); color: #fff; padding: 2rem 0; }
+  .page-header h1 { font-size: 1.8rem; font-weight: 700; }
+
+  /* AVATAR */
+  .avatar-wrap { position: relative; display: inline-block; }
+  .avatar-circle { width: 90px; height: 90px; border-radius: 50%; background: var(--eco-light); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; color: var(--eco-dark); border: 4px solid rgba(255,255,255,.3); }
+  .avatar-edit { position: absolute; bottom: 0; right: 0; background: var(--accent); color: #fff; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: .75rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+  /* TABS */
+  .dash-tabs { background: #fff; border-bottom: 2px solid #e0ece7; margin-bottom: 2rem; }
+  .nav-tabs { border-bottom: none; }
+  .nav-tabs .nav-link { color: #64748b; font-weight: 500; padding: .9rem 1.4rem; border: none; border-bottom: 3px solid transparent; border-radius: 0; }
+  .nav-tabs .nav-link:hover { color: var(--eco-main); border-color: var(--eco-light); }
+  .nav-tabs .nav-link.active { color: var(--eco-main); border-bottom-color: var(--eco-main); font-weight: 600; background: none; }
+
+  /* CARDS */
+  .section-card { background: #fff; border-radius: 14px; border: 2px solid #e0ece7; padding: 1.8rem; margin-bottom: 1.5rem; }
+  .section-card h5 { color: var(--eco-dark); font-weight: 700; border-bottom: 2px solid #e0ece7; padding-bottom: .7rem; margin-bottom: 1.2rem; }
+  .form-control:focus, .form-select:focus { border-color: var(--eco-mid); box-shadow: 0 0 0 3px rgba(64,145,108,.15); }
+  .btn-eco { background: var(--eco-main); color: #fff; border: none; border-radius: 8px; font-weight: 600; padding: .55rem 1.5rem; }
+  .btn-eco:hover { background: var(--eco-dark); color: #fff; }
+
+  /* ROLE CARDS */
+  .role-card { border: 2px solid #e0ece7; border-radius: 12px; padding: 1.5rem; text-align: center; transition: all .3s; cursor: pointer; }
+  .role-card:hover { border-color: var(--eco-mid); box-shadow: 0 4px 16px rgba(45,106,79,.1); }
+  .role-card.active { border-color: var(--eco-main); background: #f0fff4; }
+  .role-icon { font-size: 2.5rem; margin-bottom: .5rem; }
+
+  /* VEHICLE CARD */
+  .vehicle-card { border: 2px solid #e0ece7; border-radius: 12px; padding: 1.2rem; display: flex; gap: 1rem; align-items: center; margin-bottom: .8rem; }
+  .vehicle-icon { width: 50px; height: 50px; background: #f0f7f3; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--eco-main); flex-shrink: 0; }
+  .badge-primary-cust { background: #e0f2fe; color: #0369a1; border-radius: 20px; padding: .2rem .7rem; font-size: .75rem; font-weight: 600; }
+
+  /* PREFS */
+  .pref-badge { background: #f0fff4; border: 2px solid #d8f3dc; color: var(--eco-dark); border-radius: 20px; padding: .35rem .9rem; font-size: .85rem; font-weight: 500; display: inline-flex; align-items: center; gap: .4rem; }
+  .pref-badge .bi-x { cursor: pointer; color: var(--eco-mid); }
+</style>
+</head>
+<body>
+
+<div class="annotation">🖥️ MAQUETTE DESKTOP — Espace utilisateur EcoRide · 1280px · ECF DWWM 2026</div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#">🌿 Eco<span>Ride</span></a>
+    <div class="navbar-nav ms-auto d-flex flex-row align-items-center gap-3">
+      <a class="nav-link" href="#">Covoiturages</a>
+      <a class="nav-link" href="#">Mes voyages</a>
+      <a class="nav-link active" href="#">Mon espace</a>
+      <span class="credits-badge"><i class="bi bi-coin me-1"></i>45 crédits</span>
+      <a class="nav-link" href="#"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <div class="d-flex align-items-center gap-4">
+      <div class="avatar-wrap">
+        <div class="avatar-circle">M</div>
+        <button class="avatar-edit"><i class="bi bi-camera-fill"></i></button>
+      </div>
+      <div>
+        <h1 class="mb-1">Bonjour, Marie 👋</h1>
+        <p class="mb-0 opacity-75"><i class="bi bi-envelope me-1"></i>marie@email.fr &nbsp;·&nbsp; <i class="bi bi-calendar3 me-1"></i>Membre depuis janvier 2026 &nbsp;·&nbsp; <span class="badge" style="background:rgba(255,255,255,.2)">Chauffeur & Passager</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="dash-tabs">
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-person-fill me-2"></i>Mon profil</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-toggles me-2"></i>Mes rôles</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-car-front-fill me-2"></i>Mes véhicules</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-heart-fill me-2"></i>Mes préférences</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="container pb-5">
+  <div class="row g-4">
+
+    <!-- LEFT COL -->
+    <div class="col-lg-8">
+
+      <!-- PROFIL -->
+      <div class="section-card">
+        <h5><i class="bi bi-person-fill me-2" style="color:var(--eco-mid)"></i>Informations personnelles</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Pseudo</label>
+            <input type="text" class="form-control" value="marie_d">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Nom complet</label>
+            <input type="text" class="form-control" value="Marie Dupont">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Email</label>
+            <input type="email" class="form-control" value="marie@email.fr">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Téléphone</label>
+            <input type="tel" class="form-control" value="06 12 34 56 78">
+          </div>
+          <div class="col-12">
+            <label class="form-label small fw-semibold">Date de naissance</label>
+            <input type="date" class="form-control" value="1992-03-15">
+          </div>
+          <div class="col-12 text-end">
+            <button class="btn btn-eco"><i class="bi bi-check-circle me-2"></i>Enregistrer les modifications</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VEHICLES PREVIEW -->
+      <div class="section-card">
+        <h5><i class="bi bi-car-front-fill me-2" style="color:var(--eco-mid)"></i>Mes véhicules</h5>
+        <div class="vehicle-card">
+          <div class="vehicle-icon"><i class="bi bi-lightning-charge-fill" style="color:var(--eco-main)"></i></div>
+          <div class="flex-grow-1">
+            <div class="fw-semibold">Tesla Model 3</div>
+            <div class="small text-muted">AB-123-CD &nbsp;·&nbsp; 2022 &nbsp;·&nbsp; Bleu</div>
+            <span class="badge-primary-cust mt-1"><i class="bi bi-lightning-charge-fill me-1"></i>Électrique</span>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+          </div>
+        </div>
+        <div class="vehicle-card">
+          <div class="vehicle-icon" style="background:#fef3c7;color:#92400e"><i class="bi bi-fuel-pump-fill"></i></div>
+          <div class="flex-grow-1">
+            <div class="fw-semibold">Renault Clio</div>
+            <div class="small text-muted">EF-456-GH &nbsp;·&nbsp; 2019 &nbsp;·&nbsp; Rouge</div>
+            <span class="badge bg-secondary text-white mt-1" style="font-size:.75rem">Essence</span>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+          </div>
+        </div>
+        <button class="btn w-100 mt-2" style="border:2px dashed var(--eco-mid);color:var(--eco-main);border-radius:10px;background:none;font-weight:600">
+          <i class="bi bi-plus-circle me-2"></i>Ajouter un véhicule
+        </button>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COL -->
+    <div class="col-lg-4">
+
+      <!-- STATS -->
+      <div class="section-card mb-3">
+        <h5><i class="bi bi-bar-chart-fill me-2" style="color:var(--eco-mid)"></i>Mes statistiques</h5>
+        <div class="row g-3 text-center">
+          <div class="col-6">
+            <div class="fw-bold" style="font-size:1.8rem;color:var(--eco-main)">12</div>
+            <div class="small text-muted">Trajets passager</div>
+          </div>
+          <div class="col-6">
+            <div class="fw-bold" style="font-size:1.8rem;color:var(--eco-main)">7</div>
+            <div class="small text-muted">Trajets chauffeur</div>
+          </div>
+          <div class="col-6">
+            <div class="fw-bold" style="font-size:1.8rem;color:var(--accent)">45</div>
+            <div class="small text-muted">Crédits restants</div>
+          </div>
+          <div class="col-6">
+            <div class="fw-bold" style="font-size:1.8rem;color:var(--eco-main)">4.2</div>
+            <div class="small text-muted">Note moyenne</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROLES -->
+      <div class="section-card">
+        <h5><i class="bi bi-toggles me-2" style="color:var(--eco-mid)"></i>Mes rôles actifs</h5>
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="role-card active">
+              <div class="role-icon">🚗</div>
+              <div class="fw-semibold small">Chauffeur</div>
+              <div class="mt-2">
+                <span class="badge" style="background:var(--eco-main);color:#fff;font-size:.7rem">Actif</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="role-card active">
+              <div class="role-icon">🧳</div>
+              <div class="fw-semibold small">Passager</div>
+              <div class="mt-2">
+                <span class="badge" style="background:var(--eco-main);color:#fff;font-size:.7rem">Actif</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PREFS -->
+        <hr class="my-3">
+        <div class="fw-semibold small mb-2" style="color:var(--eco-dark)"><i class="bi bi-heart-fill me-2" style="color:var(--eco-mid)"></i>Préférences</div>
+        <div class="d-flex flex-wrap gap-2">
+          <span class="pref-badge"><i class="bi bi-music-note"></i> Musique douce <i class="bi bi-x"></i></span>
+          <span class="pref-badge"><i class="bi bi-slash-circle"></i> Non-fumeur <i class="bi bi-x"></i></span>
+          <span class="pref-badge"><i class="bi bi-paw"></i> Animaux OK <i class="bi bi-x"></i></span>
+        </div>
+        <div class="mt-2">
+          <input type="text" class="form-control form-control-sm mt-2" placeholder="Ajouter une préférence...">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:var(--eco-dark);color:rgba(255,255,255,.7);padding:1.5rem 0;text-align:center;font-size:.85rem;">
+  <div class="container">
+    🌿 <strong>EcoRide</strong> &nbsp;·&nbsp; <a href="#" style="color:var(--eco-light);text-decoration:none">Mentions légales</a> &nbsp;·&nbsp; <a href="#" style="color:var(--eco-light);text-decoration:none">Contact</a>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

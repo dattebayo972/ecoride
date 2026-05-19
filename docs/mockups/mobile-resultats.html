@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>EcoRide — Résultats recherche Mobile</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --eco-dark:  #1b4332;
+    --eco-main:  #2d6a4f;
+    --eco-mid:   #40916c;
+    --eco-light: #74c69d;
+    --accent:    #f4a261;
+  }
+  body { background: #e2e8f0; font-family: 'Poppins', sans-serif; display: flex; flex-direction: column; align-items: center; padding-top: 30px; padding-bottom: 40px; }
+  .annotation { position: fixed; top: 0; left: 0; right: 0; background: #1e293b; color: #94a3b8; text-align: center; font-size: .75rem; padding: .3rem; z-index: 9999; font-family: monospace; }
+  .phone-frame { width: 390px; max-width: 100%; background: #f8faf9; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,.25), 0 0 0 10px #1e293b; overflow: hidden; margin-top: 10px; }
+  .phone-notch { background: #1e293b; height: 30px; display: flex; align-items: center; justify-content: center; }
+  .phone-notch-bar { width: 100px; height: 16px; background: #0f172a; border-radius: 20px; }
+  .phone-content { overflow-y: auto; max-height: 820px; }
+
+  /* TOP BAR */
+  .top-bar { background: var(--eco-dark); padding: .6rem 1rem; display: flex; align-items: center; gap: .8rem; }
+  .top-bar .back { color: rgba(255,255,255,.8); font-size: 1.1rem; text-decoration: none; }
+  .top-bar .brand { color: #fff; font-weight: 700; font-size: 1.1rem; }
+  .top-bar .brand span { color: var(--eco-light); }
+
+  /* SEARCH COMPACT */
+  .search-compact { background: var(--eco-dark); padding: .5rem 1rem 1rem; }
+  .search-compact .inner { background: rgba(255,255,255,.12); border-radius: 10px; padding: .7rem 1rem; display: flex; align-items: center; gap: .8rem; color: #fff; font-size: .85rem; }
+  .search-compact .inner .divider { color: rgba(255,255,255,.4); }
+  .search-compact .inner .route-info { flex: 1; }
+  .search-compact .inner .route-info .cities { font-weight: 600; }
+  .search-compact .inner .route-info .date { font-size: .75rem; opacity: .75; }
+  .search-compact .inner .edit-btn { color: var(--eco-light); font-size: .75rem; text-decoration: none; }
+
+  /* FILTERS STRIP */
+  .filters-strip { background: #fff; border-bottom: 1px solid #e0ece7; padding: .6rem 1rem; display: flex; gap: .5rem; overflow-x: auto; white-space: nowrap; }
+  .filters-strip::-webkit-scrollbar { display: none; }
+  .filter-chip { display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .8rem; border-radius: 20px; font-size: .75rem; font-weight: 600; border: 2px solid #e0ece7; background: #fff; color: #64748b; cursor: pointer; white-space: nowrap; }
+  .filter-chip.active { background: var(--eco-main); color: #fff; border-color: var(--eco-main); }
+  .filter-chip i { font-size: .8rem; }
+
+  /* RESULTS COUNT */
+  .results-bar { background: #fff; padding: .6rem 1rem; border-bottom: 1px solid #e0ece7; display: flex; justify-content: space-between; align-items: center; }
+  .results-bar .count { font-size: .8rem; color: #64748b; }
+  .results-bar .count strong { color: var(--eco-dark); }
+  .sort-btn { font-size: .75rem; color: var(--eco-main); background: none; border: none; font-weight: 600; }
+
+  /* CARDS */
+  .results-list { padding: .8rem 1rem; }
+  .card-trip {
+    background: #fff;
+    border: 2px solid #e0ece7;
+    border-radius: 14px;
+    margin-bottom: .8rem;
+    overflow: hidden;
+    transition: all .2s;
+  }
+  .card-trip.featured { border-color: var(--eco-mid); }
+  .card-trip-header { padding: .6rem .9rem; background: var(--eco-dark); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+  .card-trip-header .route { font-weight: 700; font-size: .9rem; }
+  .card-trip-header .price { background: var(--accent); color: #fff; border-radius: 8px; padding: .15rem .6rem; font-weight: 700; font-size: .85rem; }
+  .card-trip-body { padding: .8rem .9rem; }
+  .time-row { display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem; }
+  .time-tag { background: #f0f7f3; color: var(--eco-dark); border-radius: 6px; padding: .2rem .55rem; font-size: .75rem; font-weight: 600; }
+  .duration { font-size: .72rem; color: #94a3b8; }
+  .driver-row { display: flex; justify-content: space-between; align-items: center; }
+  .driver-info { display: flex; align-items: center; gap: .5rem; }
+  .avatar-sm { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .8rem; }
+  .driver-name { font-size: .8rem; font-weight: 600; }
+  .driver-rating { font-size: .72rem; color: var(--accent); }
+  .badges-row { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .badge-eco-sm { background: #d8f3dc; color: var(--eco-dark); border-radius: 12px; padding: .15rem .55rem; font-size: .7rem; font-weight: 600; }
+  .badge-seats { background: #f1f5f9; color: #475569; border-radius: 12px; padding: .15rem .55rem; font-size: .7rem; }
+  .card-trip-footer { padding: .6rem .9rem; border-top: 1px solid #f0f7f3; display: flex; justify-content: flex-end; }
+  .btn-see { background: var(--eco-main); color: #fff; border: none; border-radius: 8px; padding: .4rem 1.1rem; font-size: .8rem; font-weight: 600; }
+
+  /* LOAD MORE */
+  .load-more { text-align: center; padding: .5rem 1rem 1rem; }
+  .btn-load { background: none; border: 2px solid var(--eco-mid); color: var(--eco-main); border-radius: 10px; padding: .6rem 1.5rem; font-weight: 600; font-size: .85rem; width: 100%; }
+
+  /* BOTTOM NAV */
+  .bottom-nav { background: #fff; border-top: 2px solid #e0ece7; display: flex; }
+  .bottom-nav a { flex: 1; display: flex; flex-direction: column; align-items: center; padding: .6rem .3rem; color: #94a3b8; text-decoration: none; font-size: .6rem; gap: .2rem; }
+  .bottom-nav a.active { color: var(--eco-main); }
+  .bottom-nav a i { font-size: 1.2rem; }
+</style>
+</head>
+<body>
+
+<div class="annotation">📱 MAQUETTE MOBILE — Résultats recherche EcoRide · 390px · ECF DWWM 2026</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div class="phone-notch-bar"></div></div>
+  <div class="phone-content">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <a href="#" class="back"><i class="bi bi-arrow-left"></i></a>
+      <span class="brand">🌿 Eco<span>Ride</span></span>
+    </div>
+
+    <!-- SEARCH COMPACT -->
+    <div class="search-compact">
+      <div class="inner">
+        <i class="bi bi-search"></i>
+        <div class="route-info">
+          <div class="cities">Paris → Lyon</div>
+          <div class="date">20 mai 2026 · 1 passager</div>
+        </div>
+        <a href="#" class="edit-btn"><i class="bi bi-pencil me-1"></i>Modifier</a>
+      </div>
+    </div>
+
+    <!-- FILTERS STRIP -->
+    <div class="filters-strip">
+      <div class="filter-chip active"><i class="bi bi-funnel-fill"></i>Tous les filtres</div>
+      <div class="filter-chip active"><i class="bi bi-lightning-charge-fill"></i>Écologique</div>
+      <div class="filter-chip"><i class="bi bi-coin"></i>≤ 20 crédits</div>
+      <div class="filter-chip"><i class="bi bi-clock"></i>≤ 4h</div>
+      <div class="filter-chip"><i class="bi bi-star-fill"></i>≥ 4★</div>
+    </div>
+
+    <!-- RESULTS BAR -->
+    <div class="results-bar">
+      <span class="count"><strong>8 trajets</strong> trouvés</span>
+      <button class="sort-btn"><i class="bi bi-arrow-down-up me-1"></i>Trier</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-list">
+
+      <!-- CARD 1 -->
+      <div class="card-trip featured">
+        <div class="card-trip-header">
+          <span class="route"><i class="bi bi-arrow-right me-1"></i>Paris → Lyon</span>
+          <span class="price">8 crédits</span>
+        </div>
+        <div class="card-trip-body">
+          <div class="time-row">
+            <span class="time-tag"><i class="bi bi-clock me-1"></i>08:00 → 11:30</span>
+            <span class="duration">3h 30 · 20/05</span>
+          </div>
+          <div class="driver-row">
+            <div class="driver-info">
+              <div class="avatar-sm" style="background:var(--eco-light);color:var(--eco-dark)">M</div>
+              <div>
+                <div class="driver-name">Marie D.</div>
+                <div class="driver-rating">★★★★☆ 4.0</div>
+              </div>
+            </div>
+            <div class="badges-row">
+              <span class="badge-eco-sm"><i class="bi bi-lightning-charge-fill me-1"></i>Éco</span>
+              <span class="badge-seats"><i class="bi bi-people me-1"></i>2</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-trip-footer">
+          <button class="btn-see"><i class="bi bi-eye me-1"></i>Voir le détail</button>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="card-trip">
+        <div class="card-trip-header">
+          <span class="route"><i class="bi bi-arrow-right me-1"></i>Paris → Lyon</span>
+          <span class="price">6 crédits</span>
+        </div>
+        <div class="card-trip-body">
+          <div class="time-row">
+            <span class="time-tag"><i class="bi bi-clock me-1"></i>10:00 → 14:00</span>
+            <span class="duration">4h 00 · 20/05</span>
+          </div>
+          <div class="driver-row">
+            <div class="driver-info">
+              <div class="avatar-sm" style="background:var(--eco-mid);color:#fff">T</div>
+              <div>
+                <div class="driver-name">Thomas R.</div>
+                <div class="driver-rating">★★★★★ 5.0</div>
+              </div>
+            </div>
+            <div class="badges-row">
+              <span class="badge-seats" style="background:#e2e8f0"><i class="bi bi-fuel-pump me-1"></i>Non éco</span>
+              <span class="badge-seats"><i class="bi bi-people me-1"></i>3</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-trip-footer">
+          <button class="btn-see"><i class="bi bi-eye me-1"></i>Voir le détail</button>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="card-trip featured">
+        <div class="card-trip-header">
+          <span class="route"><i class="bi bi-arrow-right me-1"></i>Paris → Lyon</span>
+          <span class="price">10 crédits</span>
+        </div>
+        <div class="card-trip-body">
+          <div class="time-row">
+            <span class="time-tag"><i class="bi bi-clock me-1"></i>14:30 → 17:30</span>
+            <span class="duration">3h 00 · 20/05</span>
+          </div>
+          <div class="driver-row">
+            <div class="driver-info">
+              <div class="avatar-sm" style="background:#d8f3dc;color:var(--eco-dark)">S</div>
+              <div>
+                <div class="driver-name">Sophie L.</div>
+                <div class="driver-rating">★★★★½ 4.5</div>
+              </div>
+            </div>
+            <div class="badges-row">
+              <span class="badge-eco-sm"><i class="bi bi-lightning-charge-fill me-1"></i>Éco</span>
+              <span class="badge-seats"><i class="bi bi-people me-1"></i>1</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-trip-footer">
+          <button class="btn-see"><i class="bi bi-eye me-1"></i>Voir le détail</button>
+        </div>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="card-trip">
+        <div class="card-trip-header">
+          <span class="route"><i class="bi bi-arrow-right me-1"></i>Paris → Lyon</span>
+          <span class="price">9 crédits</span>
+        </div>
+        <div class="card-trip-body">
+          <div class="time-row">
+            <span class="time-tag"><i class="bi bi-clock me-1"></i>17:00 → 21:00</span>
+            <span class="duration">4h 00 · 20/05</span>
+          </div>
+          <div class="driver-row">
+            <div class="driver-info">
+              <div class="avatar-sm" style="background:#fde68a;color:#92400e">A</div>
+              <div>
+                <div class="driver-name">Alex M.</div>
+                <div class="driver-rating">★★★☆☆ 3.5</div>
+              </div>
+            </div>
+            <div class="badges-row">
+              <span class="badge-eco-sm"><i class="bi bi-lightning-charge-fill me-1"></i>Éco</span>
+              <span class="badge-seats"><i class="bi bi-people me-1"></i>4</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-trip-footer">
+          <button class="btn-see"><i class="bi bi-eye me-1"></i>Voir le détail</button>
+        </div>
+      </div>
+
+      <!-- LOAD MORE -->
+      <div class="load-more">
+        <button class="btn-load"><i class="bi bi-arrow-down me-2"></i>Afficher plus de résultats (4)</button>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <a href="#"><i class="bi bi-house-fill"></i>Accueil</a>
+      <a href="#" class="active"><i class="bi bi-search"></i>Recherche</a>
+      <a href="#"><i class="bi bi-plus-circle-fill" style="color:var(--eco-main);font-size:1.6rem"></i>Proposer</a>
+      <a href="#"><i class="bi bi-clock-history"></i>Historique</a>
+      <a href="#"><i class="bi bi-person-fill"></i>Profil</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>EcoRide — Accueil Mobile Mockup</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --eco-dark:  #1b4332;
+    --eco-main:  #2d6a4f;
+    --eco-mid:   #40916c;
+    --eco-light: #74c69d;
+    --accent:    #f4a261;
+  }
+
+  /* Simulate mobile frame */
+  body {
+    background: #e2e8f0;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    padding-bottom: 40px;
+  }
+  .annotation {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: #1e293b; color: #94a3b8;
+    text-align: center; font-size: .75rem; padding: .3rem;
+    z-index: 9999; font-family: monospace;
+  }
+  .phone-frame {
+    width: 390px;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25), 0 0 0 10px #1e293b;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  .phone-notch {
+    background: #1e293b;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .phone-notch-bar { width: 100px; height: 16px; background: #0f172a; border-radius: 20px; }
+  .phone-content { overflow-y: auto; max-height: 820px; }
+
+  /* APP STYLES */
+  .top-bar { background: var(--eco-dark); padding: .6rem 1rem; display: flex; justify-content: space-between; align-items: center; }
+  .top-bar .brand { color: #fff; font-weight: 700; font-size: 1.15rem; }
+  .top-bar .brand span { color: var(--eco-light); }
+  .top-bar-btns { display: flex; gap: .5rem; }
+  .top-bar-btns a { color: rgba(255,255,255,.8); font-size: .8rem; text-decoration: none; }
+
+  /* HERO MOBILE */
+  .hero-mobile {
+    background: linear-gradient(160deg, var(--eco-dark) 0%, var(--eco-main) 100%);
+    color: #fff;
+    padding: 2rem 1.2rem 1.5rem;
+  }
+  .hero-mobile h1 { font-size: 1.5rem; font-weight: 700; line-height: 1.3; }
+  .hero-mobile h1 span { color: var(--eco-light); }
+  .hero-mobile p { font-size: .85rem; opacity: .85; }
+
+  .search-mobile { background: #fff; border-radius: 16px; padding: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,.15); margin: 0 1rem; margin-top: -1.5rem; position: relative; z-index: 10; }
+  .search-mobile label { font-size: .75rem; font-weight: 600; color: var(--eco-dark); margin-bottom: .2rem; }
+  .search-mobile .form-control { border: 2px solid #e0ece7; border-radius: 8px; padding: .5rem .8rem; font-size: .85rem; }
+  .search-mobile .form-control:focus { border-color: var(--eco-mid); box-shadow: none; }
+  .btn-search-m { background: var(--eco-main); color: #fff; border: none; border-radius: 8px; width: 100%; padding: .65rem; font-weight: 600; font-size: .9rem; }
+
+  /* FEATURES MOBILE */
+  .features-mobile { padding: 1.5rem 1rem; }
+  .features-mobile h2 { font-size: 1.1rem; font-weight: 700; color: var(--eco-dark); margin-bottom: 1rem; }
+  .feat-item { display: flex; gap: .8rem; align-items: flex-start; margin-bottom: 1rem; }
+  .feat-icon { width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, var(--eco-light), var(--eco-mid)); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem; flex-shrink: 0; }
+  .feat-text h6 { font-size: .85rem; font-weight: 600; color: var(--eco-dark); margin-bottom: .15rem; }
+  .feat-text p { font-size: .75rem; color: #64748b; margin: 0; }
+
+  /* TRIPS MOBILE */
+  .trips-mobile { padding: 0 1rem 1rem; background: #f8faf9; }
+  .trips-mobile h2 { font-size: 1.1rem; font-weight: 700; color: var(--eco-dark); padding: 1rem 0 .7rem; }
+  .card-trip-m { background: #fff; border: 2px solid #e0ece7; border-radius: 12px; padding: 1rem; margin-bottom: .8rem; }
+  .route-m { font-weight: 700; font-size: .95rem; color: var(--eco-dark); }
+  .badge-eco-m { background: #d8f3dc; color: var(--eco-dark); border-radius: 20px; padding: .2rem .6rem; font-size: .7rem; font-weight: 600; }
+  .price-m { background: var(--accent); color: #fff; border-radius: 8px; padding: .2rem .6rem; font-weight: 700; font-size: .85rem; }
+
+  /* CTA MOBILE */
+  .cta-mobile { background: linear-gradient(135deg, var(--eco-main), var(--eco-dark)); color: #fff; padding: 1.5rem 1rem; text-align: center; }
+  .cta-mobile h2 { font-size: 1.15rem; font-weight: 700; }
+  .btn-cta-m { background: var(--accent); color: #fff; border: none; border-radius: 10px; padding: .7rem 2rem; font-weight: 700; font-size: .9rem; width: 100%; }
+
+  /* BOTTOM NAV */
+  .bottom-nav { background: #fff; border-top: 2px solid #e0ece7; display: flex; }
+  .bottom-nav a { flex: 1; display: flex; flex-direction: column; align-items: center; padding: .6rem .3rem; color: #94a3b8; text-decoration: none; font-size: .6rem; gap: .2rem; }
+  .bottom-nav a.active { color: var(--eco-main); }
+  .bottom-nav a i { font-size: 1.2rem; }
+</style>
+</head>
+<body>
+
+<div class="annotation">📱 MAQUETTE MOBILE — Accueil EcoRide · 390px · ECF DWWM 2026</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div class="phone-notch-bar"></div></div>
+  <div class="phone-content">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <span class="brand">🌿 Eco<span>Ride</span></span>
+      <div class="top-bar-btns">
+        <a href="#">Connexion</a>
+        <span style="color:rgba(255,255,255,.4)">|</span>
+        <a href="#" style="color:var(--accent);font-weight:600">S'inscrire</a>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero-mobile">
+      <h1>Le covoiturage <span>écologique</span> qui vous rapproche</h1>
+      <p class="mt-2 mb-0">Voyagez vert, économisez des crédits.</p>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-mobile mx-3 mt-n3 mb-3">
+      <div class="mb-2">
+        <label>Ville de départ</label>
+        <div class="input-group">
+          <span class="input-group-text border-0 ps-2" style="background:#f8faf9"><i class="bi bi-geo-alt text-muted"></i></span>
+          <input type="text" class="form-control border-start-0 ps-1" placeholder="Paris" style="background:#f8faf9">
+        </div>
+      </div>
+      <div class="mb-2">
+        <label>Ville d'arrivée</label>
+        <div class="input-group">
+          <span class="input-group-text border-0 ps-2" style="background:#f8faf9"><i class="bi bi-geo-alt-fill text-muted"></i></span>
+          <input type="text" class="form-control border-start-0 ps-1" placeholder="Lyon" style="background:#f8faf9">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label>Date</label>
+        <input type="date" class="form-control" value="2026-05-20">
+      </div>
+      <button class="btn-search-m"><i class="bi bi-search me-2"></i>Rechercher</button>
+    </div>
+
+    <!-- STATS -->
+    <div class="d-flex text-center py-3 mx-3 mb-1" style="background:#f0fff4;border-radius:12px;">
+      <div class="flex-fill border-end" style="border-color:#d8f3dc !important">
+        <div class="fw-bold" style="color:var(--eco-main);font-size:1.2rem">12k</div>
+        <div style="font-size:.7rem;color:#64748b">membres</div>
+      </div>
+      <div class="flex-fill border-end" style="border-color:#d8f3dc !important">
+        <div class="fw-bold" style="color:var(--eco-main);font-size:1.2rem">8.5k</div>
+        <div style="font-size:.7rem;color:#64748b">trajets</div>
+      </div>
+      <div class="flex-fill">
+        <div class="fw-bold" style="color:var(--eco-main);font-size:1.2rem">🌿</div>
+        <div style="font-size:.7rem;color:#64748b">CO₂ réduit</div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features-mobile">
+      <h2>Pourquoi EcoRide ?</h2>
+      <div class="feat-item">
+        <div class="feat-icon"><i class="bi bi-leaf-fill"></i></div>
+        <div class="feat-text">
+          <h6>Trajets écologiques</h6>
+          <p>Privilégiez les véhicules électriques pour la planète.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon"><i class="bi bi-coin"></i></div>
+        <div class="feat-text">
+          <h6>Crédits offerts</h6>
+          <p>20 crédits à l'inscription. Économisez à chaque trajet.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon"><i class="bi bi-shield-check-fill"></i></div>
+        <div class="feat-text">
+          <h6>Profils vérifiés</h6>
+          <p>Conducteurs notés par la communauté.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRIPS PREVIEW -->
+    <div class="trips-mobile">
+      <h2>Prochains départs</h2>
+      <div class="card-trip-m">
+        <div class="d-flex justify-content-between align-items-start mb-1">
+          <span class="route-m">Paris → Lyon</span>
+          <span class="price-m">8 crédits</span>
+        </div>
+        <div class="small text-muted mb-2"><i class="bi bi-clock me-1"></i>20/05 · 08:00 → 11:30</div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center gap-2">
+            <div style="width:30px;height:30px;border-radius:50%;background:var(--eco-light);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:var(--eco-dark)">M</div>
+            <span class="small fw-semibold">Marie D.</span>
+            <span style="font-size:.75rem;color:var(--accent)">★4.0</span>
+          </div>
+          <span class="badge-eco-m"><i class="bi bi-lightning-charge-fill me-1"></i>Éco</span>
+        </div>
+      </div>
+      <div class="card-trip-m">
+        <div class="d-flex justify-content-between align-items-start mb-1">
+          <span class="route-m">Lyon → Marseille</span>
+          <span class="price-m">12 crédits</span>
+        </div>
+        <div class="small text-muted mb-2"><i class="bi bi-clock me-1"></i>21/05 · 14:00 → 17:00</div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center gap-2">
+            <div style="width:30px;height:30px;border-radius:50%;background:var(--eco-mid);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#fff">T</div>
+            <span class="small fw-semibold">Thomas R.</span>
+            <span style="font-size:.75rem;color:var(--accent)">★5.0</span>
+          </div>
+          <span class="badge bg-secondary text-white" style="font-size:.7rem">Non éco</span>
+        </div>
+      </div>
+      <a href="#" class="btn w-100 mt-1 fw-semibold" style="color:var(--eco-main);border:2px solid var(--eco-main);border-radius:8px;font-size:.85rem">Voir tous les trajets <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-mobile">
+      <h2>Prêt à voyager vert ?</h2>
+      <p style="font-size:.82rem;opacity:.8" class="mb-3">Rejoignez la communauté EcoRide dès aujourd'hui.</p>
+      <button class="btn-cta-m">Créer mon compte gratuit</button>
+    </div>
+
+    <!-- FOOTER (simplified) -->
+    <div style="background:var(--eco-dark);color:rgba(255,255,255,.6);text-align:center;padding:1rem;font-size:.72rem;">
+      © 2026 EcoRide &nbsp;·&nbsp; <a href="#" style="color:var(--eco-light)">Mentions légales</a>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <a href="#" class="active"><i class="bi bi-house-fill"></i>Accueil</a>
+      <a href="#"><i class="bi bi-search"></i>Recherche</a>
+      <a href="#"><i class="bi bi-plus-circle-fill" style="color:var(--eco-main);font-size:1.6rem"></i>Proposer</a>
+      <a href="#"><i class="bi bi-clock-history"></i>Historique</a>
+      <a href="#"><i class="bi bi-person-fill"></i>Profil</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

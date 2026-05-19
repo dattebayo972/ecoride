@@ -1,0 +1,52 @@
+{
+    "name": "EcoRide",
+    "description": "Plateforme de covoiturage écologique — ECF DWWM",
+    "keywords": ["php", "covoiturage", "mysql"],
+    "website": "https://github.com/votre-username/ecoride",
+    "repository": "https://github.com/votre-username/ecoride",
+    "logo": "https://raw.githubusercontent.com/votre-username/ecoride/main/public/assets/img/logo.png",
+    "success_url": "/public/",
+    "scripts": {},
+    "env": {
+        "DB_HOST": {
+            "description": "Hôte de la base de données MySQL",
+            "value": "localhost"
+        },
+        "DB_NAME": {
+            "description": "Nom de la base de données",
+            "value": "ecoride"
+        },
+        "DB_USER": {
+            "description": "Utilisateur MySQL",
+            "generator": "secret"
+        },
+        "DB_PASS": {
+            "description": "Mot de passe MySQL",
+            "generator": "secret"
+        },
+        "MONGO_URI": {
+            "description": "URI MongoDB Atlas (optionnel)",
+            "required": false,
+            "value": ""
+        },
+        "APP_URL": {
+            "description": "URL publique de l'application",
+            "value": "https://ecoride-app.herokuapp.com"
+        },
+        "MAIL_FROM": {
+            "description": "Email expéditeur",
+            "value": "noreply@ecoride.fr"
+        }
+    },
+    "addons": [
+        {
+            "plan": "jawsdb:kitefin",
+            "as": "JAWSDB"
+        }
+    ],
+    "buildpacks": [
+        {
+            "url": "heroku/php"
+        }
+    ]
+}

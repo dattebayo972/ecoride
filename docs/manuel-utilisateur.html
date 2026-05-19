@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoRide — Manuel Utilisateur</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Poppins', sans-serif; background: #fff; color: #1e293b; line-height: 1.7; }
+@media print {
+  .no-print { display: none !important; }
+  body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .page-break { page-break-before: always; }
+  section { page-break-inside: avoid; }
+}
+.page { max-width: 900px; margin: 0 auto; padding: 2.5rem 2rem; }
+
+/* COVER */
+.cover {
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 55%, #40916c 100%);
+  color: #fff; padding: 80px 60px; min-height: 400px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.cover::after { content: ''; position: absolute; bottom: -80px; right: -60px; width: 280px; height: 280px; border-radius: 50%; background: rgba(116,198,157,.12); }
+.cover .logo { font-size: 2.8rem; font-weight: 800; }
+.cover .logo span { color: #74c69d; }
+.cover h1 { font-size: 2rem; font-weight: 700; margin-top: 2rem; }
+.cover .subtitle { font-size: 1rem; opacity: .8; margin-top: .5rem; }
+.cover .meta { margin-top: 2.5rem; font-size: .82rem; opacity: .55; border-top: 1px solid rgba(255,255,255,.2); padding-top: 1rem; }
+
+/* TOC */
+.toc { background: #f0fff4; border: 2px solid #d8f3dc; border-radius: 14px; padding: 1.8rem 2rem; margin: 2rem 0; }
+.toc h3 { color: #1b4332; font-weight: 700; margin-bottom: 1rem; font-size: 1rem; }
+.toc ol { padding-left: 1.2rem; }
+.toc li { margin-bottom: .4rem; font-size: .9rem; color: #2d6a4f; }
+.toc li a { color: #2d6a4f; text-decoration: none; font-weight: 500; }
+.toc li a:hover { text-decoration: underline; }
+
+/* HEADINGS */
+h2 { font-size: 1.4rem; font-weight: 700; color: #1b4332; border-left: 5px solid #40916c; padding-left: 1rem; margin: 2.5rem 0 1rem; }
+h3 { font-size: 1.05rem; font-weight: 700; color: #2d6a4f; margin: 1.5rem 0 .7rem; }
+h4 { font-size: .95rem; font-weight: 600; color: #1e293b; margin: 1.2rem 0 .5rem; }
+p { margin-bottom: .8rem; color: #334155; font-size: .92rem; }
+hr { height: 2px; background: linear-gradient(to right, #1b4332, #74c69d, transparent); border: none; margin: 2rem 0; }
+
+/* CREDENTIALS TABLE */
+.creds-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .88rem; }
+.creds-table th { background: #1b4332; color: #fff; padding: .7rem 1rem; text-align: left; font-weight: 600; }
+.creds-table td { border: 1px solid #e0ece7; padding: .65rem 1rem; vertical-align: middle; }
+.creds-table tr:nth-child(even) td { background: #f8faf9; }
+.creds-table .role-badge { display: inline-block; border-radius: 20px; padding: .2rem .7rem; font-size: .78rem; font-weight: 700; }
+.badge-admin { background: #fee2e2; color: #991b1b; }
+.badge-employe { background: #faf5ff; color: #7c3aed; }
+.badge-chauffeur { background: #f0fff4; color: #1b4332; }
+.badge-passager { background: #e0f2fe; color: #0369a1; }
+.badge-multi { background: #fff7ed; color: #92400e; }
+.creds-table code { background: #f1f5f9; border-radius: 4px; padding: .1rem .4rem; font-size: .82rem; color: #1b4332; }
+
+/* STEP CARDS */
+.steps { counter-reset: step; }
+.step {
+  display: flex; gap: 1.2rem; margin-bottom: 1.2rem;
+  background: #fff; border: 2px solid #e0ece7; border-radius: 12px; padding: 1.1rem 1.3rem;
+}
+.step-num {
+  counter-increment: step;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #2d6a4f; color: #fff; font-weight: 700; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.step-num::before { content: counter(step); }
+.step-content h4 { margin-top: 0; color: #1b4332; }
+.step-content p { margin-bottom: 0; font-size: .88rem; }
+
+/* ALERT BOXES */
+.alert-box { border-radius: 10px; padding: 1rem 1.2rem; margin: 1rem 0; font-size: .88rem; display: flex; gap: .8rem; align-items: flex-start; }
+.alert-info { background: #e0f2fe; border-left: 4px solid #0369a1; color: #0c4a6e; }
+.alert-success { background: #f0fff4; border-left: 4px solid #2d6a4f; color: #14532d; }
+.alert-warning { background: #fffbeb; border-left: 4px solid #f4a261; color: #78350f; }
+.alert-danger { background: #fee2e2; border-left: 4px solid #dc2626; color: #7f1d1d; }
+.alert-box i { font-size: 1.2rem; flex-shrink: 0; margin-top: .1rem; }
+
+/* ROLE SECTIONS */
+.role-header { border-radius: 10px; padding: .8rem 1.2rem; margin: 1.5rem 0 1rem; display: flex; align-items: center; gap: .8rem; }
+.rh-visiteur { background: #f1f5f9; border: 2px solid #cbd5e1; }
+.rh-passager { background: #e0f2fe; border: 2px solid #7dd3fc; }
+.rh-chauffeur { background: #f0fff4; border: 2px solid #74c69d; }
+.rh-employe { background: #faf5ff; border: 2px solid #c4b5fd; }
+.rh-admin { background: #fff7ed; border: 2px solid #fdba74; }
+.role-header .icon { font-size: 1.5rem; }
+.role-header .name { font-weight: 700; font-size: 1rem; }
+.role-header .desc { font-size: .82rem; opacity: .75; }
+
+/* SCREENSHOT PLACEHOLDER */
+.screenshot { background: #f8faf9; border: 2px dashed #d8f3dc; border-radius: 12px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #94a3b8; font-size: .85rem; margin: 1rem 0; text-align: center; }
+.screenshot i { font-size: 2.5rem; margin-bottom: .5rem; color: #d8f3dc; }
+
+/* SHORTCUT TABLE */
+.shortcut-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.shortcut-table td { padding: .5rem .8rem; border-bottom: 1px solid #f0f7f3; }
+.shortcut-table td:first-child { font-weight: 600; color: #2d6a4f; width: 40%; }
+kbd { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: .15rem .4rem; font-size: .78rem; font-family: monospace; }
+
+.print-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #2d6a4f; color: #fff; border: none; border-radius: 50px; padding: .7rem 1.5rem; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; box-shadow: 0 4px 16px rgba(45,106,79,.3); z-index: 999; font-size: .9rem; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="logo">🌿 Eco<span>Ride</span></div>
+  <h1>Manuel Utilisateur</h1>
+  <div class="subtitle">Guide complet de la plateforme de covoiturage écologique</div>
+  <div class="meta">
+    Version 1.0 &nbsp;·&nbsp; ECF DWWM 2026 &nbsp;·&nbsp; Mai 2026<br>
+    Tous rôles : Visiteur · Passager · Chauffeur · Employé · Administrateur
+  </div>
+</div>
+
+<div class="page">
+
+<!-- TOC -->
+<div class="toc">
+  <h3>📋 Table des matières</h3>
+  <ol>
+    <li><a href="#presentation">Présentation de EcoRide</a></li>
+    <li><a href="#comptes-test">Comptes de test — identifiants</a></li>
+    <li><a href="#visiteur">Guide Visiteur — Navigation publique</a></li>
+    <li><a href="#inscription">S'inscrire et se connecter</a></li>
+    <li><a href="#passager">Guide Passager — Réserver un trajet</a></li>
+    <li><a href="#chauffeur">Guide Chauffeur — Proposer et gérer des trajets</a></li>
+    <li><a href="#espace-utilisateur">Espace utilisateur — Profil & Préférences</a></li>
+    <li><a href="#employe">Guide Employé — Modération</a></li>
+    <li><a href="#admin">Guide Administrateur — Gestion globale</a></li>
+    <li><a href="#credits">Système de crédits — Fonctionnement</a></li>
+    <li><a href="#faq">FAQ — Questions fréquentes</a></li>
+  </ol>
+</div>
+
+<!-- ─── 1. PRÉSENTATION ─── -->
+<h2 id="presentation">1. Présentation de EcoRide</h2>
+
+<p>EcoRide est une plateforme de covoiturage écologique conçue pour mettre en relation des conducteurs et des passagers souhaitant partager des trajets tout en réduisant leur empreinte carbone.</p>
+
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.2rem 0">
+  <div style="background:#f0fff4;border:2px solid #d8f3dc;border-radius:12px;padding:1.2rem;text-align:center">
+    <div style="font-size:2rem;margin-bottom:.5rem">🌿</div>
+    <div style="font-weight:700;color:#1b4332;font-size:.9rem">Écologique</div>
+    <div style="font-size:.78rem;color:#64748b;margin-top:.3rem">Privilégiez les véhicules électriques et hybrides</div>
+  </div>
+  <div style="background:#fff7ed;border:2px solid #fdba74;border-radius:12px;padding:1.2rem;text-align:center">
+    <div style="font-size:2rem;margin-bottom:.5rem">🪙</div>
+    <div style="font-weight:700;color:#92400e;font-size:.9rem">Crédits</div>
+    <div style="font-size:.78rem;color:#64748b;margin-top:.3rem">20 crédits offerts à l'inscription · Système de paiement interne</div>
+  </div>
+  <div style="background:#e0f2fe;border:2px solid #7dd3fc;border-radius:12px;padding:1.2rem;text-align:center">
+    <div style="font-size:2rem;margin-bottom:.5rem">🛡️</div>
+    <div style="font-weight:700;color:#0369a1;font-size:.9rem">Sécurisé</div>
+    <div style="font-size:.78rem;color:#64748b;margin-top:.3rem">Profils vérifiés · Avis communautaires · Support employé</div>
+  </div>
+</div>
+
+<p><strong>URL de l'application locale :</strong> <code style="background:#f1f5f9;border-radius:4px;padding:.2rem .5rem;font-size:.88rem">http://localhost/projet_tristan_ecoride/ecoride/public/</code></p>
+
+<hr>
+
+<!-- ─── 2. COMPTES DE TEST ─── -->
+<h2 id="comptes-test">2. Comptes de test — Identifiants</h2>
+
+<div class="alert-box alert-info">
+  <i class="bi bi-info-circle-fill"></i>
+  <div>Ces comptes sont pré-créés dans la base de données via <strong>seed_data.sql</strong>. Ils permettent de tester toutes les fonctionnalités sans inscription manuelle.</div>
+</div>
+
+<table class="creds-table">
+  <thead>
+    <tr>
+      <th>Rôle</th>
+      <th>Email</th>
+      <th>Mot de passe</th>
+      <th>Pseudo</th>
+      <th>Crédits</th>
+      <th>Accès</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="role-badge badge-admin">👑 Admin</span></td>
+      <td><code>admin@ecoride.fr</code></td>
+      <td><code>Admin1234!</code></td>
+      <td>admin</td>
+      <td>999</td>
+      <td>Tout (admin + employé + chauffeur + passager)</td>
+    </tr>
+    <tr>
+      <td><span class="role-badge badge-employe">🛡️ Employé</span></td>
+      <td><code>employe@ecoride.fr</code></td>
+      <td><code>Employe1234!</code></td>
+      <td>employe1</td>
+      <td>0</td>
+      <td>Espace employé (modération avis & litiges)</td>
+    </tr>
+    <tr>
+      <td><span class="role-badge badge-multi">🚗🧳 Chauffeur+Passager</span></td>
+      <td><code>chauffeur@ecoride.fr</code></td>
+      <td><code>Chauffeur1234!</code></td>
+      <td>thomas_r</td>
+      <td>50</td>
+      <td>Saisir trajets, historique chauffeur</td>
+    </tr>
+    <tr>
+      <td><span class="role-badge badge-passager">🧳 Passager</span></td>
+      <td><code>passager@ecoride.fr</code></td>
+      <td><code>Passager1234!</code></td>
+      <td>marie_d</td>
+      <td>45</td>
+      <td>Recherche, réservation, avis</td>
+    </tr>
+    <tr>
+      <td><span class="role-badge badge-multi">🚗🧳 Chauffeur+Passager</span></td>
+      <td><code>alex@ecoride.fr</code></td>
+      <td><code>Alex1234!</code></td>
+      <td>alex_m</td>
+      <td>30</td>
+      <td>Compte secondaire pour les tests</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="alert-box alert-warning">
+  <i class="bi bi-exclamation-triangle-fill"></i>
+  <div><strong>Politique de mot de passe :</strong> Au moins 8 caractères, 1 majuscule, 1 chiffre, 1 caractère spécial. Exemple valide : <code>MonMotDePasse1!</code></div>
+</div>
+
+<hr>
+
+<!-- ─── 3. VISITEUR ─── -->
+<h2 id="visiteur">3. Guide Visiteur — Navigation publique</h2>
+
+<div class="role-header rh-visiteur">
+  <span class="icon">👤</span>
+  <div><div class="name">Visiteur (non connecté)</div><div class="desc">Peut consulter les covoiturages sans créer de compte</div></div>
+</div>
+
+<p>En tant que visiteur, vous pouvez accéder aux pages publiques sans vous inscrire :</p>
+
+<h3>3.1 — Page d'accueil</h3>
+<p>La page d'accueil présente un formulaire de recherche rapide. Renseignez la <strong>ville de départ</strong>, la <strong>ville d'arrivée</strong> et la <strong>date</strong>, puis cliquez sur <strong>Rechercher</strong>.</p>
+
+<h3>3.2 — Liste des covoiturages</h3>
+<p>Les résultats affichent les trajets disponibles avec :</p>
+<ul style="margin-left:1.2rem;margin-bottom:.8rem;font-size:.9rem;color:#334155">
+  <li>Le trajet (départ → arrivée) et les horaires</li>
+  <li>Le profil du conducteur et sa note communautaire</li>
+  <li>Le prix en crédits et le nombre de places disponibles</li>
+  <li>Le badge <span style="background:#d8f3dc;color:#1b4332;border-radius:20px;padding:.1rem .5rem;font-size:.78rem;font-weight:600">⚡ Écologique</span> si le véhicule est électrique</li>
+</ul>
+
+<h3>3.3 — Filtres avancés</h3>
+<p>Affinez votre recherche via la barre latérale :</p>
+<table class="shortcut-table">
+  <tr><td>⚡ Écologique uniquement</td><td>N'affiche que les véhicules électriques/hybrides</td></tr>
+  <tr><td>💰 Prix maximum</td><td>Slider de 0 à 50 crédits</td></tr>
+  <tr><td>⏱️ Durée maximale</td><td>Slider de 0 à 12 heures</td></tr>
+  <tr><td>⭐ Note minimum</td><td>Slider de 1 à 5 étoiles</td></tr>
+</table>
+
+<h3>3.4 — Détail d'un covoiturage</h3>
+<p>Cliquez sur <strong>Voir le détail</strong> pour accéder à la fiche complète : itinéraire, conducteur, véhicule, avis des anciens passagers et préférences de voyage. La réservation nécessite un compte.</p>
+
+<hr>
+
+<!-- ─── 4. INSCRIPTION ─── -->
+<h2 id="inscription">4. S'inscrire et se connecter</h2>
+
+<h3>4.1 — Inscription</h3>
+<div class="steps">
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-content">
+      <h4>Accéder au formulaire</h4>
+      <p>Cliquez sur <strong>S'inscrire</strong> dans la barre de navigation, ou sur le bouton <strong>Créer mon compte</strong> en page d'accueil.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-content">
+      <h4>Remplir le formulaire</h4>
+      <p>Pseudo, nom, prénom, email, date de naissance, et mot de passe (≥ 8 caractères, 1 majuscule, 1 chiffre, 1 spécial).</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-content">
+      <h4>Validation automatique</h4>
+      <p>Un indicateur de force du mot de passe s'affiche en temps réel. Les erreurs sont signalées immédiatement.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-content">
+      <h4>Compte créé — 20 crédits offerts !</h4>
+      <p>Vous êtes automatiquement redirigé vers votre espace utilisateur avec <strong>20 crédits</strong> de bienvenue.</p>
+    </div>
+  </div>
+</div>
+
+<div class="alert-box alert-success">
+  <i class="bi bi-gift-fill"></i>
+  <div><strong>Bonus bienvenue :</strong> 20 crédits sont crédités instantanément sur votre compte à l'inscription.</div>
+</div>
+
+<h3>4.2 — Connexion</h3>
+<p>Cliquez sur <strong>Connexion</strong> dans la navbar. Saisissez votre email et mot de passe. Si vous avez oublié votre mot de passe, contactez le support via la page <strong>Contact</strong>.</p>
+
+<hr>
+
+<!-- ─── 5. PASSAGER ─── -->
+<h2 id="passager" class="page-break">5. Guide Passager</h2>
+
+<div class="role-header rh-passager">
+  <span class="icon">🧳</span>
+  <div><div class="name">Passager</div><div class="desc">Recherche et réserve des trajets · Valide et laisse des avis</div></div>
+</div>
+
+<h3>5.1 — Réserver un trajet</h3>
+<div class="steps">
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-content">
+      <h4>Rechercher un trajet</h4>
+      <p>Depuis l'accueil ou la page <strong>Covoiturages</strong>, renseignez départ, arrivée et date.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-content">
+      <h4>Consulter le détail</h4>
+      <p>Cliquez sur <strong>Voir le détail</strong> pour voir les avis du conducteur, ses préférences et son véhicule.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-content">
+      <h4>Réserver</h4>
+      <p>Cliquez sur <strong>Réserver ce covoiturage</strong>. Les crédits sont immédiatement déduits de votre compte. Une confirmation s'affiche.</p>
+    </div>
+  </div>
+</div>
+
+<h3>5.2 — Après le trajet</h3>
+<p>Dans <strong>Mes voyages → Onglet Passager</strong>, vous pouvez :</p>
+<table class="shortcut-table">
+  <tr><td>✅ Valider le trajet</td><td>Confirme que le trajet a eu lieu. Libère les crédits vers le chauffeur.</td></tr>
+  <tr><td>❌ Annuler (avant démarrage)</td><td>Annulation gratuite si le trajet n'a pas encore démarré.</td></tr>
+  <tr><td>⚠️ Déclarer un litige</td><td>En cas de problème. Un employé EcoRide prend en charge le dossier.</td></tr>
+  <tr><td>⭐ Laisser un avis</td><td>Notez le conducteur de 1 à 5 étoiles + commentaire (affiché après validation).</td></tr>
+</table>
+
+<hr>
+
+<!-- ─── 6. CHAUFFEUR ─── -->
+<h2 id="chauffeur">6. Guide Chauffeur</h2>
+
+<div class="role-header rh-chauffeur">
+  <span class="icon">🚗</span>
+  <div><div class="name">Chauffeur</div><div class="desc">Propose des trajets · Gère ses covoiturages · Reçoit des crédits</div></div>
+</div>
+
+<div class="alert-box alert-info">
+  <i class="bi bi-info-circle-fill"></i>
+  <div>Pour proposer un trajet, vous devez avoir activé le rôle <strong>Chauffeur</strong> dans votre espace utilisateur et avoir ajouté au moins un <strong>véhicule</strong>.</div>
+</div>
+
+<h3>6.1 — Proposer un covoiturage</h3>
+<div class="steps">
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-content">
+      <h4>Accéder au formulaire</h4>
+      <p>Cliquez sur <strong>Proposer un trajet</strong> dans la navbar (visible uniquement avec le rôle Chauffeur actif).</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-content">
+      <h4>Renseigner le trajet</h4>
+      <p>Lieu de départ, lieu d'arrivée, date, heure de départ, heure d'arrivée, nombre de places, prix par personne (en crédits).</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-content">
+      <h4>Choisir le véhicule</h4>
+      <p>Sélectionnez un de vos véhicules dans la liste déroulante. Vous pouvez en ajouter un nouveau directement depuis le formulaire.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-content">
+      <h4>Publier</h4>
+      <p>Cliquez sur <strong>Publier le trajet</strong>. Il apparaît immédiatement dans les résultats de recherche.</p>
+    </div>
+  </div>
+</div>
+
+<h3>6.2 — Gérer ses trajets</h3>
+<p>Dans <strong>Mes voyages → Onglet Chauffeur</strong> :</p>
+<table class="shortcut-table">
+  <tr><td>▶️ Démarrer</td><td>Passe le trajet en statut "En cours". Les passagers sont notifiés.</td></tr>
+  <tr><td>⏹️ Terminer</td><td>Valide la fin du trajet. Les crédits sont distribués.</td></tr>
+  <tr><td>❌ Annuler</td><td>Annule le trajet (avant démarrage). Les passagers sont remboursés.</td></tr>
+</table>
+
+<div class="alert-box alert-success">
+  <i class="bi bi-coin"></i>
+  <div><strong>Revenus chauffeur :</strong> À la fin du trajet, vous recevez <strong>prix × nb_passagers − 2 crédits de commission EcoRide</strong>.</div>
+</div>
+
+<hr>
+
+<!-- ─── 7. ESPACE UTILISATEUR ─── -->
+<h2 id="espace-utilisateur">7. Espace utilisateur</h2>
+
+<p>Accessible via <strong>Mon espace</strong> dans la navbar (une fois connecté). Organisé en 4 onglets :</p>
+
+<h3>7.1 — Mon profil</h3>
+<p>Modifiez votre pseudo, nom, email, téléphone et date de naissance. Changez votre photo de profil en cliquant sur l'icône appareil photo.</p>
+
+<h3>7.2 — Mes rôles</h3>
+<p>Activez ou désactivez les rôles <strong>Passager</strong> et <strong>Chauffeur</strong>. Un utilisateur peut avoir les deux simultanément. Les rôles Employé et Admin sont attribués par l'administration uniquement.</p>
+
+<h3>7.3 — Mes véhicules</h3>
+<p>Ajoutez, modifiez ou supprimez vos véhicules. Pour chaque véhicule : marque, modèle, couleur, immatriculation, année, type d'énergie (électrique = badge écologique sur vos trajets).</p>
+
+<h3>7.4 — Mes préférences</h3>
+<p>Configurez vos préférences de voyage (fumeur, animaux, musique…) via les cases à cocher et l'ajout libre de préférences personnalisées. Ces préférences s'affichent sur votre profil et sur vos fiches de trajet.</p>
+
+<hr>
+
+<!-- ─── 8. EMPLOYÉ ─── -->
+<h2 id="employe" class="page-break">8. Guide Employé</h2>
+
+<div class="role-header rh-employe">
+  <span class="icon">🛡️</span>
+  <div><div class="name">Employé EcoRide</div><div class="desc">Modère les avis · Gère les litiges · Assure la qualité de la plateforme</div></div>
+</div>
+
+<h3>8.1 — Modération des avis</h3>
+<p>Dans l'<strong>Espace Employé</strong>, l'onglet <strong>Avis en attente</strong> liste tous les avis soumis par les passagers en attente de validation.</p>
+<table class="shortcut-table">
+  <tr><td>✅ Valider</td><td>L'avis devient visible sur le profil du conducteur et dans MongoDB</td></tr>
+  <tr><td>❌ Refuser</td><td>L'avis est supprimé (contenu inapproprié, spam, etc.)</td></tr>
+</table>
+
+<h3>8.2 — Gestion des litiges</h3>
+<p>L'onglet <strong>Litiges</strong> liste les déclarations de problèmes des passagers. L'employé peut :</p>
+<ul style="margin-left:1.2rem;font-size:.9rem;color:#334155;margin-bottom:.8rem">
+  <li>Lire le détail du litige (trajet, passager, motif)</li>
+  <li>Marquer le litige comme <strong>traité</strong> après résolution (remboursement manuel ou médiation)</li>
+</ul>
+
+<div class="alert-box alert-warning">
+  <i class="bi bi-exclamation-triangle-fill"></i>
+  <div>L'accès à l'espace employé est réservé aux comptes avec le rôle <strong>employé</strong> attribué par un administrateur. Toute tentative d'accès non autorisé retourne une erreur 403.</div>
+</div>
+
+<hr>
+
+<!-- ─── 9. ADMIN ─── -->
+<h2 id="admin">9. Guide Administrateur</h2>
+
+<div class="role-header rh-admin">
+  <span class="icon">👑</span>
+  <div><div class="name">Administrateur</div><div class="desc">Accès total · Statistiques · Création d'employés · Suspension de comptes</div></div>
+</div>
+
+<h3>9.1 — Tableau de bord statistiques</h3>
+<p>L'espace admin affiche deux graphiques Chart.js mis à jour en temps réel :</p>
+<ul style="margin-left:1.2rem;font-size:.9rem;color:#334155;margin-bottom:.8rem">
+  <li><strong>Covoiturages par jour</strong> (30 derniers jours)</li>
+  <li><strong>Crédits échangés par jour</strong> (30 derniers jours)</li>
+</ul>
+<p>Plus des compteurs : total utilisateurs, covoiturages, crédits en circulation, avis publiés.</p>
+
+<h3>9.2 — Créer un compte employé</h3>
+<p>Remplissez le formulaire (pseudo, email, mot de passe temporaire) → Le compte est créé avec le rôle <strong>Employé</strong> et un email de bienvenue est envoyé.</p>
+
+<h3>9.3 — Suspendre / réactiver un compte</h3>
+<p>Recherchez un utilisateur par son pseudo ou email. Cliquez sur <strong>Suspendre</strong> ou <strong>Réactiver</strong>. Un compte suspendu ne peut plus se connecter.</p>
+
+<hr>
+
+<!-- ─── 10. CRÉDITS ─── -->
+<h2 id="credits">10. Système de crédits</h2>
+
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:1rem 0">
+  <div style="background:#f0fff4;border:2px solid #d8f3dc;border-radius:12px;padding:1.2rem">
+    <h4 style="color:#1b4332;margin-bottom:.6rem">💰 Gagner des crédits</h4>
+    <ul style="margin-left:1rem;font-size:.85rem;color:#334155">
+      <li>+20 crédits à l'inscription</li>
+      <li>+prix × passagers (fin de trajet chauffeur)</li>
+      <li>Remboursement si trajet annulé</li>
+    </ul>
+  </div>
+  <div style="background:#fff7ed;border:2px solid #fdba74;border-radius:12px;padding:1.2rem">
+    <h4 style="color:#92400e;margin-bottom:.6rem">💸 Dépenser des crédits</h4>
+    <ul style="margin-left:1rem;font-size:.85rem;color:#334155">
+      <li>−prix du trajet (réservation passager)</li>
+      <li>−2 crédits commission EcoRide (chauffeur)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="alert-box alert-info">
+  <i class="bi bi-info-circle-fill"></i>
+  <div>Les crédits ne sont pas remboursables en argent réel. Ils restent valables indéfiniment sur la plateforme.</div>
+</div>
+
+<hr>
+
+<!-- ─── 11. FAQ ─── -->
+<h2 id="faq">11. FAQ — Questions fréquentes</h2>
+
+<div style="display:flex;flex-direction:column;gap:.8rem">
+  <details style="background:#f8faf9;border:2px solid #e0ece7;border-radius:10px;padding:1rem">
+    <summary style="font-weight:600;color:#1b4332;cursor:pointer">Je n'ai pas assez de crédits pour réserver. Que faire ?</summary>
+    <p style="margin-top:.7rem;font-size:.88rem">Proposez vous-même un covoiturage en tant que chauffeur pour gagner des crédits, ou contactez le support via la page Contact.</p>
+  </details>
+  <details style="background:#f8faf9;border:2px solid #e0ece7;border-radius:10px;padding:1rem">
+    <summary style="font-weight:600;color:#1b4332;cursor:pointer">Comment annuler une réservation sans perdre mes crédits ?</summary>
+    <p style="margin-top:.7rem;font-size:.88rem">L'annulation est gratuite si le trajet n'a pas encore démarré (statut "planifié"). Une fois le trajet démarré par le chauffeur, l'annulation n'est plus possible et vous devez déclarer un litige.</p>
+  </details>
+  <details style="background:#f8faf9;border:2px solid #e0ece7;border-radius:10px;padding:1rem">
+    <summary style="font-weight:600;color:#1b4332;cursor:pointer">Mon avis n'apparaît pas sur le profil du conducteur.</summary>
+    <p style="margin-top:.7rem;font-size:.88rem">Les avis sont soumis à validation par un employé EcoRide avant publication. Ce processus peut prendre quelques heures.</p>
+  </details>
+  <details style="background:#f8faf9;border:2px solid #e0ece7;border-radius:10px;padding:1rem">
+    <summary style="font-weight:600;color:#1b4332;cursor:pointer">Comment ajouter le rôle Chauffeur à mon compte ?</summary>
+    <p style="margin-top:.7rem;font-size:.88rem">Allez dans <strong>Mon espace → Mes rôles</strong> et cochez la case <strong>Chauffeur</strong>. Vous devrez ensuite ajouter au moins un véhicule pour publier un trajet.</p>
+  </details>
+  <details style="background:#f8faf9;border:2px solid #e0ece7;border-radius:10px;padding:1rem">
+    <summary style="font-weight:600;color:#1b4332;cursor:pointer">Qu'est-ce qu'un véhicule "écologique" ?</summary>
+    <p style="margin-top:.7rem;font-size:.88rem">Un véhicule est considéré écologique s'il est électrique ou hybride (configuré lors de l'ajout du véhicule). Il recevra automatiquement le badge <span style="background:#d8f3dc;color:#1b4332;border-radius:20px;padding:.1rem .4rem;font-size:.78rem">⚡ Écologique</span> sur les fiches de trajet.</p>
+  </details>
+</div>
+
+<hr>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:2rem 0;font-size:.8rem;color:#94a3b8">
+  EcoRide · Manuel Utilisateur v1.0 · ECF DWWM 2026<br>
+  Pour exporter en PDF : <kbd>Ctrl+P</kbd> → <em>Enregistrer en PDF</em>
+</div>
+
+</div>
+
+<button class="print-btn no-print" onclick="window.print()">🖨️ Exporter en PDF</button>
+
+</body>
+</html>

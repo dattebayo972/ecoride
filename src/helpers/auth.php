@@ -3,13 +3,20 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Détecte automatiquement le chemin de base (fonctionne quel que soit le dossier htdocs)
+// Détecte automatiquement le chemin de base
+// Sur Heroku (DYNO défini), le document root est déjà public/ → BASE_URL vide
+// En local XAMPP, on extrait le chemin jusqu'à /public depuis SCRIPT_NAME
 if (!defined('BASE_URL')) {
-    $script = $_SERVER['SCRIPT_NAME'] ?? '';
-    if (preg_match('#^(.*?/public)#', $script, $m)) {
-        define('BASE_URL', $m[1]);
+    if (getenv('DYNO') !== false) {
+        // Heroku : pas de préfixe de chemin
+        define('BASE_URL', '');
     } else {
-        define('BASE_URL', '/ecoride/public');
+        $script = $_SERVER['SCRIPT_NAME'] ?? '';
+        if (preg_match('#^(.*?/public)#', $script, $m)) {
+            define('BASE_URL', $m[1]);
+        } else {
+            define('BASE_URL', '/projet_tristan_ecoride/ecoride/public');
+        }
     }
 }
 
