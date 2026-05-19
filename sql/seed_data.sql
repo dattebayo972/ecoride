@@ -41,31 +41,31 @@ INSERT INTO parametre (propriete, valeur) VALUES
 -- Administrateur
 INSERT INTO utilisateur (nom, prenom, email, password, pseudo, credits, statut) VALUES
     ('Admin', 'EcoRide', 'admin@ecoride.fr',
-     '$2y$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMleqd7i/M/eGK2hFnBl3vE9Vy',
+     '$2y$12$RNseaJHCqLOyxZsaX2ecJeUii35CxJsTDtlz7RJ9z1AE5UQc8pXwC',
      'admin_ecoride', 0, 'actif');
 
 -- Employé
 INSERT INTO utilisateur (nom, prenom, email, password, pseudo, credits, statut) VALUES
     ('Dupont', 'Marie', 'employe@ecoride.fr',
-     '$2y$12$wd7n6i3dS7.qR3c7G9sxVuWrmMjjO5u2KJF6V7M6Q7tNd8e3vW6Fi',
+     '$2y$12$pdXqTtY6xY1m0QvDSfLyl.IRUj2iawX.zBJN7VOepIm7oFzu.cgAy',
      'marie_employe', 0, 'actif');
 
 -- Chauffeur
 INSERT INTO utilisateur (nom, prenom, email, password, pseudo, credits, statut) VALUES
     ('Martin', 'Lucas', 'chauffeur@ecoride.fr',
-     '$2y$12$HxT3eD7kX8pWqA2mN5vRcO.KjLgF1uS9tYnV4bZ6wE0rI8cM3oP7a',
+     '$2y$12$.OWOXO6.nU7YWI9.IGWa2u1ISaT0G946Jkvzl67bbdnmYWwmcskZm',
      'lucas_driver', 100, 'actif');
 
 -- Passager
 INSERT INTO utilisateur (nom, prenom, email, password, pseudo, credits, statut) VALUES
     ('Leroy', 'Sophie', 'passager@ecoride.fr',
-     '$2y$12$TrE9wQ5nK2oD8vL3xM7sYuP1cJ4fZ6bN0aS8eV2gI5hO7mR9tW1qX',
+     '$2y$12$64gYi/4GuKsg0tIwdN/1duQIAXMvbn6P9zY7sRhwtVkRlQSdGxW1u',
      'sophie_pass', 50, 'actif');
 
 -- Deuxième chauffeur (voiture électrique)
 INSERT INTO utilisateur (nom, prenom, email, password, pseudo, credits, statut) VALUES
     ('Bernard', 'Alex', 'alex@ecoride.fr',
-     '$2y$12$TrE9wQ5nK2oD8vL3xM7sYuP1cJ4fZ6bN0aS8eV2gI5hO7mR9tW1qX',
+     '$2y$12$64gYi/4GuKsg0tIwdN/1duQIAXMvbn6P9zY7sRhwtVkRlQSdGxW1u',
      'alex_eco', 80, 'actif');
 
 -- ------------------------------------------------------------
