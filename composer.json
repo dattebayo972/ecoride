@@ -17,6 +17,9 @@
         "post-install-cmd": []
     },
     "config": {
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "platform": {
+            "ext-mongodb": "1.16.0"
+        }
     }
 }
