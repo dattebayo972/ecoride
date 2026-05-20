@@ -21,6 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         AvisModel::refuse($avisId);
         setFlash('success', 'Avis refusé.');
     }
+    if ($action === 'traiter_litige') {
+        $passagerId    = (int)($_POST['passager_id']    ?? 0);
+        $covoiturageId = (int)($_POST['covoiturage_id'] ?? 0);
+        if ($passagerId && $covoiturageId) {
+            CovoiturageModel::resolveLitige($passagerId, $covoiturageId);
+            setFlash('success', 'Litige marqué comme traité.');
+        }
+    }
     redirect(BASE_URL . '/espace-employe.php');
 }
 
@@ -150,6 +158,7 @@ include __DIR__ . '/../src/components/navbar.php';
                                     <th>Date</th>
                                     <th>Chauffeur</th>
                                     <th>Passager</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -170,6 +179,17 @@ include __DIR__ . '/../src/components/navbar.php';
                                         <a href="mailto:<?= h($l['passager_email']) ?>" class="text-muted small">
                                             <?= h($l['passager_email']) ?>
                                         </a>
+                                    </td>
+                                    <td>
+                                        <form method="POST" class="d-inline">
+                                            <?= csrfField() ?>
+                                            <input type="hidden" name="action"         value="traiter_litige">
+                                            <input type="hidden" name="passager_id"    value="<?= $l['passager_id'] ?>">
+                                            <input type="hidden" name="covoiturage_id" value="<?= $l['covoiturage_id'] ?>">
+                                            <button type="submit" class="btn btn-sm btn-warning">
+                                                <i class="bi bi-check2-circle me-1"></i>Traiter
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
