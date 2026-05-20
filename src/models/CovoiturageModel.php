@@ -216,6 +216,7 @@ class CovoiturageModel {
         return getPDO()->query(
             "SELECT c.covoiturage_id, c.date_depart, c.heure_depart, c.lieu_depart, c.lieu_arrivee,
                     uc.pseudo as chauffeur_pseudo, uc.email as chauffeur_email,
+                    up.utilisateur_id as passager_id,
                     up.pseudo as passager_pseudo, up.email as passager_email,
                     p.statut as participe_statut
              FROM participe p
@@ -225,5 +226,11 @@ class CovoiturageModel {
              WHERE p.statut = 'litige'
              ORDER BY c.date_depart DESC"
         )->fetchAll();
+    }
+
+    public static function resolveLitige(int $passagerId, int $covoiturageId): void {
+        getPDO()->prepare(
+            "UPDATE participe SET statut = 'valide' WHERE utilisateur_id = ? AND covoiturage_id = ?"
+        )->execute([$passagerId, $covoiturageId]);
     }
 }
