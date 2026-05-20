@@ -27,7 +27,7 @@ class AvisModel {
                 'commentaire'      => $data['commentaire'],
                 'note'             => (int) $data['note'],
                 'statut'           => 'en_attente',
-                'created_at'       => new MongoDB\BSON\UTCDateTime(),
+                'created_at'       => new \MongoDB\BSON\UTCDateTime(),
             ]);
         }
         return $id;
