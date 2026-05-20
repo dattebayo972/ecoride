@@ -39,8 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$errors) {
         UserModel::create(['pseudo' => $pseudo, 'email' => $email, 'password' => $password]);
-        setFlash('success', 'Compte créé ! Vous bénéficiez de 20 crédits. Connectez-vous maintenant.');
-        redirect(BASE_URL . '/connexion.php');
+        $newUser = UserModel::findByEmail($email);
+        $roles   = UserModel::getRoles((int) $newUser['utilisateur_id']);
+        loginUser($newUser, $roles);
+        setFlash('success', 'Bienvenue ! Votre compte a été créé avec 20 crédits offerts.');
+        redirect(BASE_URL . '/espace-utilisateur.php');
     }
 }
 
