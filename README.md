@@ -107,6 +107,7 @@ feature/*   ← une branche par US
 
 ## Déploiement en production
 
-Voir `docs/documentation_technique.pdf` pour les étapes détaillées.
+Application déployée sur Heroku :  
+**https://ecoride-tristan-56cd9852c03c.herokuapp.com/**
 
-Plateformes supportées : Railway, Heroku, Fly.io, Azure.
+Voir `docs/documentation_technique.pdf` pour les étapes détaillées de déploiement.
