@@ -33,13 +33,7 @@ document.querySelectorAll('.alert-dismissible').forEach(alert => {
     }, 4000);
 });
 
-// Filtres covoiturages : soumission automatique au changement
-const filterForm = document.getElementById('filterForm');
-if (filterForm) {
-    filterForm.querySelectorAll('input, select').forEach(el => {
-        el.addEventListener('change', () => filterForm.submit());
-    });
-}
+// Filtres covoiturages : voir assets/js/covoiturages.js (filtrage AJAX sans rechargement)
 
 // Aperçu photo de profil
 const photoInput = document.getElementById('photoInput');

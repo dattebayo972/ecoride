@@ -69,7 +69,9 @@ include __DIR__ . '/../src/components/navbar.php';
         <div class="col-lg-3">
             <div class="sidebar-filters">
                 <h6><i class="bi bi-funnel-fill me-2"></i>Filtres</h6>
-                <form method="GET" id="filterForm">
+                <form method="GET" id="filterForm"
+                      data-api-url="<?= BASE_URL ?>/api/search.php"
+                      data-detail-url="<?= BASE_URL ?>/detail.php">
                     <input type="hidden" name="depart"  value="<?= h($depart) ?>">
                     <input type="hidden" name="arrivee" value="<?= h($arrivee) ?>">
                     <input type="hidden" name="date"    value="<?= h($date) ?>">
@@ -124,9 +126,10 @@ include __DIR__ . '/../src/components/navbar.php';
                     <?= h($depart) ?> → <?= h($arrivee) ?>
                     <small class="text-muted fw-normal">— <?= formatDate($date) ?></small>
                 </h5>
-                <span class="badge bg-eco fs-6"><?= count($results) ?> trajet(s)</span>
+                <span class="badge bg-eco fs-6" id="resultsCount"><?= count($results) ?> trajet(s)</span>
             </div>
 
+            <div id="resultsWrap">
             <?php if (empty($results)): ?>
                 <div class="alert alert-warning d-flex align-items-center">
                     <i class="bi bi-info-circle-fill me-3 fs-4"></i>
@@ -207,6 +210,7 @@ include __DIR__ . '/../src/components/navbar.php';
                 </div>
                 <?php endforeach; ?>
             <?php endif; ?>
+            </div>
         </div>
     </div>
     <?php else: ?>
@@ -220,4 +224,5 @@ include __DIR__ . '/../src/components/navbar.php';
 
 </div>
 </main>
+<script src="<?= BASE_URL ?>/assets/js/covoiturages.js"></script>
 <?php include __DIR__ . '/../src/components/footer.php'; ?>
